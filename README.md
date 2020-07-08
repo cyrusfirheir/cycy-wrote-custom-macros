@@ -13,13 +13,13 @@ Download this repository (easiest way to grab everything, really) and cherry pic
 > If you've used previous versions of the macros from GitHub Gists, I'd recommend going through the README files again. There are some changes incompatible with those earlier versions.
 
 1. [Click to Proceed (CTP)](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/blob/master/click-to-proceed)  
-  - Clean way to reveal text block-by-block in the same passage without having to nest a million `<<linkreplace>>` macros.  
-  - Primarily made for VN like interfaces.  
+    - Clean way to reveal text block-by-block in the same passage without having to nest a million `<<linkreplace>>` macros.  
+    - Primarily made for VN like interfaces.  
 
 
 2. [Live-Update](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/blob/master/live-update)  
-  - Make an expression *'live',* i.e. it updates when the variables inside update.
-  - Under the hood, it works similarly to how the `<<replace>>` and other DOM macros do, but on the surface, it's *wayyy* simpler to use.
+    - Make an expression *'live',* i.e. it updates when the variables inside update.
+    - Under the hood, it works similarly to how the `<<replace>>` and other DOM macros do, but on the surface, it's *wayyy* simpler to use.
 
 ---
 
