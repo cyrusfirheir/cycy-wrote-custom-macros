@@ -18,7 +18,7 @@ Download this repository (easiest way to grab everything, really) and cherry pic
 
 
 2. [Live-Update](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/blob/master/live-update)  
-    - Make an expression *'live',* i.e. it updates when the variables inside update.
+    - Make the *display* of an expression 'live' and 'update' every such display to see the changes instantly.
     - Under the hood, it works similarly to how the `<<replace>>` and other DOM macros do, but on the surface, it's *wayyy* simpler to use.
 
 ---
