@@ -1,4 +1,6 @@
-(function() {
+(function () {
+  "use strict";
+
   window.CTP = function (config) {
     this.id = "";
     this.selector = "";
@@ -129,11 +131,12 @@
         switch (el.name) {
           case "ctpHead":
             {
-              var _head = CTP.contentObject(el.contents.trim(), _args);
+              var _head = CTP.contentObject(el.contents.trim(), _args + _overArgs);
               _head.index = "head";
               ctp.head = _head;
               break;
             }
+
           case "ctpTail":
             {
               var _tail = CTP.contentObject(el.contents.trim(), _args + _overArgs);
@@ -141,6 +144,7 @@
               ctp.tail = _tail;
               break;
             }
+
           default:
             {
               ctp.add(el.contents.trim(), (el.name === "ctp" ? "" : _args) + _overArgs);
