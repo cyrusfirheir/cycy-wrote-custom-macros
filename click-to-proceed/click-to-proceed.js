@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-
+  
   window.CTP = function (config) {
     this.id = "";
     this.selector = "";
@@ -85,9 +85,10 @@
       });
       if (_clear.length) clearIndex = _clear[_clear.length - 1].index;
     }
-    return this.stack.slice(clearIndex, this.log.index + 1).reduce(function (acc, cur) {
+    var out = this.stack.slice(clearIndex, this.log.index + 1).reduce(function (acc, cur) {
       return acc + _this.entry(cur.index, noT8n);
     }, "");
+    return '<span class="macro-ctp-wrapper">' + '<span class="ctp-head"></span>' + '<span class="ctp-body">' + out + '</span>' + '<span class="ctp-tail"></span>' + '</span>';
   };
 
   CTP.prototype.advance = function () {
@@ -99,7 +100,7 @@
     this.log.delayed = true;
     function delay(ctp) {
       ctp.log.delayed = false;
-      $(ctp.selector).find(".ctp-body").wiki(ctp.entry(ctp.log.index)).parent().find(".ctp-head").empty().wiki(CTP.item(ctp.head)).parent().find(".ctp-tail").empty().wiki(CTP.item(ctp.tail));
+      $(ctp.selector).find(".ctp-body").wiki(ctp.entry(ctp.log.index)).siblings(".ctp-head").empty().wiki(CTP.item(ctp.head)).siblings(".ctp-tail").empty().wiki(CTP.item(ctp.tail));
     }
     setTimeout(function () {
       return delay(_this2);
@@ -110,7 +111,7 @@
   CTP.prototype.back = function () {
     if (this.log.index <= 0 || this.log.delayed) return this;
     this.log.index--;
-    $(this.selector).find(".ctp-body").empty().wiki(this.out("noT8n")).parent().find(".ctp-head").empty().wiki(CTP.item(this.head)).parent().find(".ctp-tail").empty().wiki(CTP.item(this.tail));
+    $(this.selector).empty().wiki(this.out("noT8n")).find(".ctp-head").empty().wiki(CTP.item(this.head)).siblings(".ctp-tail").empty().wiki(CTP.item(this.tail));
     return this;
   };
 
@@ -136,7 +137,6 @@
               ctp.head = _head;
               break;
             }
-
           case "ctpTail":
             {
               var _tail = CTP.contentObject(el.contents.trim(), _args + _overArgs);
@@ -144,7 +144,6 @@
               ctp.tail = _tail;
               break;
             }
-
           default:
             {
               ctp.add(el.contents.trim(), (el.name === "ctp" ? "" : _args) + _overArgs);
@@ -154,7 +153,7 @@
       });
       variables()["#macro-ctp-dump"] = variables()["#macro-ctp-dump"] || {};
       variables()["#macro-ctp-dump"][_id] = ctp;
-      $(this.output).wiki('<span ' + _data + ' class="macro-ctp-wrapper">' + '<span class="ctp-head"></span>' + '<span class="ctp-body">' + ctp.out() + '</span>' + '<span class="ctp-tail"></span>' + '</span>').find(".ctp-head").wiki(CTP.item(ctp.head)).parent().find(".ctp-tail").wiki(CTP.item(ctp.tail));
+      $(this.output).wiki(ctp.out()).find(".macro-ctp-wrapper").attr("data-ctp", Util.escape(_id)).find(".ctp-head").wiki(CTP.item(ctp.head)).parent().find(".ctp-tail").wiki(CTP.item(ctp.tail));
     }
   });
 

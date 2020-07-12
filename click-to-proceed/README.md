@@ -233,6 +233,24 @@ var ctpTest = new CTP({
 - `index`: *(whole number)* Current index of block (zero-based).  
 - `delayed`: *(boolean)* Whether the current block is delayed or not.
 
+`head` and `tail`: *(object)* Contain the `<<ctpHead>>` and `<<ctpTail>>` respectively. These objects are structured the same as the objects in `stack`.
+
+#### The content object
+
+Each entry in the stack of content (plus the `head` and `tail`) is stored in an object structured as follows:
+
+```js
+var content = {
+  index: 0, // whole number [string for "head" and "tail"]
+  clear: false, // boolean
+  nobr: false, // boolean
+  transition: false, // boolean
+  delay: 0, // time in milliseconds
+  content: "Actual content to be put out to DOM" // string
+}
+```
+
+---
 
 ***Object methods:***
 
