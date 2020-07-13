@@ -1,4 +1,14 @@
-.macro-ctp-entry-t8n {
+/* block level elements have to mentioned explicitly - add any others as required */
+.macro-ctp-entry-t8n,
+.macro-ctp-entry-t8n p,
+.macro-ctp-entry-t8n div,
+.macro-ctp-entry-t8n h1,
+.macro-ctp-entry-t8n h2,
+.macro-ctp-entry-t8n h3,
+.macro-ctp-entry-t8n h4,
+.macro-ctp-entry-t8n h5,
+.macro-ctp-entry-t8n h6,
+.macro-ctp-entry-t8n hr {
   animation: macro-ctp-fade-in 0.4s ease;
 }
 
