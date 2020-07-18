@@ -1,6 +1,5 @@
 (function () {
   "use strict";
-  
   window.CTP = function (config) {
     this.id = "";
     this.selector = "";
@@ -93,7 +92,7 @@
 
   CTP.prototype.advance = function () {
     var _this2 = this;
-    if (this.log.index === this.stack.length - 1 || this.log.delayed) return this;
+    if (this.log.index === this.stack.length - 1 || this.log.delayed) return;
     var index = ++this.log.index;
     var _el = $(this.selector).find(".ctp-body");
     if (this.stack[index].clear) _el.empty();
@@ -102,10 +101,12 @@
       ctp.log.delayed = false;
       $(ctp.selector).find(".ctp-body").wiki(ctp.entry(ctp.log.index)).siblings(".ctp-head").empty().wiki(CTP.item(ctp.head)).siblings(".ctp-tail").empty().wiki(CTP.item(ctp.tail));
     }
-    setTimeout(function () {
-      return delay(_this2);
-    }, this.stack[index].delay);
-    return this;
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        delay(_this2);
+        resolve("advanced");
+      }, _this2.stack[index].delay);
+    });
   };
 
   CTP.prototype.back = function () {

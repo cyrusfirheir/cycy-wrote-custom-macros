@@ -275,7 +275,7 @@ ctpTest
 
 ### `<CTP Object>.advance()`
 
-Does the same as `<<ctpAdvance>>`, moving to the next block. Returns the `CTP` object for chaining.
+Does the same as `<<ctpAdvance>>`, moving to the next block. Returns a promise if advanced successfully, `undefined` otherwise.
 
 **Example:**
 
