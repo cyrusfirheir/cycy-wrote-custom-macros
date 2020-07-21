@@ -54,6 +54,7 @@ Additional keywords for individual blocks (`<<ctpNext>>`, `<<ctpHead>>`, `<<ctpT
 - `br`: Overrides `nobr` and adds a line break before the current block.
 - `noT8n` or `noTransition`: Overrides `t8n` or `transition` and removes the transition for the current block.
 - (delay): Overrides the delay set by `<<ctp>>` for the current block.
+- `redo`: When going back up the chain, re-render this block.
 
 ---
 

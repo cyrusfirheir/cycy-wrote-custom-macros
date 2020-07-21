@@ -46,6 +46,7 @@
       delay: Util.fromCssTime(mods.find(function (el) {
         return /\d+m?s/.test(el);
       }) || "0s"),
+      re: mods.includes("redo"),
       content: content
     };
   };
@@ -128,6 +129,8 @@
         $(_this3.selector).find(".macro-ctp-entry-index-" + el.index).show();
       }, this);
     }
+    var item = this.stack[this.log.index];
+    if (item.re) $(this.selector).find(".macro-ctp-entry.macro-ctp-entry-index-" + item.index).empty().wiki(item.content);
     this.stack.slice(this.log.index + 1, this.log.seen + 1).forEach(function (el) {
       $(_this3.selector).find(".macro-ctp-entry-index-" + el.index).remove();
     }, this);
