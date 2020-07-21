@@ -7,7 +7,9 @@
     this.head = "";
     this.tail = "";
     this.log = {
+      clear: 0,
       index: 0,
+      seen: 0,
       delayed: false
     };
     Object.keys(config).forEach(function (pn) {
@@ -60,7 +62,7 @@
     var noT8n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
     if (!item) return "";
     var t8n = noT8n ? "" : item.transition ? "macro-ctp-entry-t8n" : "";
-    var br = item.index === 0 || item.index === "head" || item.clear ? " " : item.nobr ? " " : "<br>";
+    var br = item.index === 0 || item.index === "head" || item.clear ? " " : item.nobr ? " " : '<br class="macro-ctp-entry-index-' + item.index + '">';
     var brAfter = item.index === "head" && !item.nobr ? "<br>" : " ";
     return br + '<span class="macro-ctp-entry macro-ctp-entry-index-' + item.index + ' ' + t8n + '">' + item.content + '</span>' + brAfter;
   };
@@ -94,8 +96,12 @@
     var _this2 = this;
     if (this.log.index === this.stack.length - 1 || this.log.delayed) return;
     var index = ++this.log.index;
+    this.log.seen = index;
     var _el = $(this.selector).find(".ctp-body");
-    if (this.stack[index].clear) _el.empty();
+    if (this.stack[index].clear) {
+      _el.children().hide();
+      this.log.clear = index - 1;
+    }
     this.log.delayed = true;
     function delay(ctp) {
       ctp.log.delayed = false;
@@ -110,9 +116,22 @@
   };
 
   CTP.prototype.back = function () {
+    var _this3 = this;
     if (this.log.index <= 0 || this.log.delayed) return this;
-    this.log.index--;
-    $(this.selector).empty().wiki(this.out("noT8n")).find(".ctp-head").empty().wiki(CTP.item(this.head)).siblings(".ctp-tail").empty().wiki(CTP.item(this.tail));
+    if (this.log.clear >= --this.log.index) {
+      var clearIndex = 0;
+      var _clear = this.stack.filter(function (el) {
+        return el.clear && el.index < _this3.log.index + 1;
+      });
+      if (_clear.length) clearIndex = _clear[_clear.length - 1].index;
+      this.stack.slice(clearIndex, this.log.index + 1).forEach(function (el) {
+        $(_this3.selector).find(".macro-ctp-entry-index-" + el.index).show();
+      }, this);
+    }
+    this.stack.slice(this.log.index + 1, this.log.seen + 1).forEach(function (el) {
+      $(_this3.selector).find(".macro-ctp-entry-index-" + el.index).remove();
+    }, this);
+    $(this.selector).find(".ctp-head").empty().wiki(CTP.item(this.head)).siblings(".ctp-tail").empty().wiki(CTP.item(this.tail));
     return this;
   };
 
