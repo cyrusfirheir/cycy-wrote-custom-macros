@@ -76,22 +76,8 @@
   };
 
   CTP.prototype.out = function () {
-    var _this = this;
-    var mods = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
-    var noClear = mods.includes("noClear");
-    var noT8n = mods.includes("noT8n");
-    var clearIndex = 0;
-    if (!noClear) {
-      var _clear = this.stack.filter(function (el) {
-        return el.clear && el.index < _this.log.index + 1;
-      });
-      if (_clear.length) clearIndex = _clear[_clear.length - 1].index;
-    }
-    var out = this.stack.slice(clearIndex, this.log.index + 1).reduce(function (acc, cur) {
-      return acc + _this.entry(cur.index, noT8n);
-    }, "");
-    return '<span class="macro-ctp-wrapper">' + '<span class="ctp-head"></span>' + '<span class="ctp-body">' + out + '</span>' + '<span class="ctp-tail"></span>' + '</span>';
-  };
+      return '<span class="macro-ctp-wrapper">' + '<span class="ctp-head"></span>' + '<span class="ctp-body">' + this.entry(0) + '</span>' + '<span class="ctp-tail"></span>' + '</span>';
+    };
 
   CTP.prototype.advance = function () {
     var _this2 = this;

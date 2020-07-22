@@ -316,26 +316,26 @@ ctpTest.entry(2);
 
 ---
 
-### `<CTP Object>.out([keywords])`
+### `<CTP Object>.out()`
 
-Returns the HTML output for the entire chain from the last 'clear' to the current index.
-
-- `keywords`: *(optional|string)* Space-separated list of words to alter the behavior of the output:
-	- `noClear`: Renders all the blocks from start to finish without considering if anything was cleared in between.
-	- `noT8n`: Removes all transitions.
+Returns the HTML output for setting up the chain with the structure and the first block.
 
 **Example:**
 
 ```js
-// Assuming current index is 3
-ctpTest.out()
+ctpTest.out();
 
 /* Returns:
  *
- * <span class="macro-ctp-entry macro-ctp-entry-index-1">Second! It cleared the first one out!</span>
- * <span class="macro-ctp-entry macro-ctp-entry-index-2">Third, but with nobr...</span>
- * <br>
- * <span class="macro-ctp-entry macro-ctp-entry-index-3">And the final one. With a transition!</span>
+ * <span class="macro-ctp-wrapper">
+ *  <span class="ctp-head"></span>
+ *  <span class="ctp-body">
+ *    <span class="macro-ctp-entry macro-ctp-entry-index-0">
+ *      Content
+ *    </span>
+ *  </span>
+ *  <span class="ctp-tail"></span>
+ * </span>
  */
 ```
 
