@@ -80,10 +80,11 @@
     };
 
   CTP.prototype.advance = function () {
-    var _this2 = this;
+    var _this = this;
+    var seen = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
     if (this.log.index === this.stack.length - 1 || this.log.delayed) return;
     var index = ++this.log.index;
-    this.log.seen = index;
+    if (!seen) this.log.seen = index;
     var _el = $(this.selector).find(".ctp-body");
     if (this.stack[index].clear) {
       _el.children().hide();
@@ -96,9 +97,9 @@
     }
     return new Promise(function (resolve, reject) {
       setTimeout(function () {
-        delay(_this2);
+        delay(_this);
         resolve("advanced");
-      }, _this2.stack[index].delay);
+      }, _this.stack[index].delay);
     });
   };
 

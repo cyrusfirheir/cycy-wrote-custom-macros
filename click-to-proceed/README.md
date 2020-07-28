@@ -213,9 +213,13 @@ CTP.getCTP("testID");
 
 ***The `CTP` custom object is set up as follows:***
 
-`id`: *(string)* Unique ID.
-
-`selector`: *(string)* CSS selector to target to output to. When used by the macro, this is the slugified form of `id`.
+`id`: *(string)* Unique ID.  
+`selector`: *(string)* CSS selector to target to output to. When used by the macro, this is the slugified form of `id`.  
+`stack`: *(array)* Contains the content of all blocks.  
+`head` and `tail`: *(object)* Contain the `<<ctpHead>>` and `<<ctpTail>>` respectively. These objects are structured the same as the objects in `stack`.  
+`log`: *(object)* Keeps track of blocks and their behaviors:  
+- `index`: *(whole number)* Current index of block (zero-based).  
+- `delayed`: *(boolean)* Whether the current block is delayed or not.
 
 **Example:**
 
@@ -225,16 +229,6 @@ var ctpTest = new CTP({
   selector: "#ctp-test-id"
 });
 ```
-
-***Other properties which are used under the hood:***
-
-`stack`: *(array)* Contains the content of all blocks.
-
-`log`: *(object)* Keeps track of blocks and their behaviors:  
-- `index`: *(whole number)* Current index of block (zero-based).  
-- `delayed`: *(boolean)* Whether the current block is delayed or not.
-
-`head` and `tail`: *(object)* Contain the `<<ctpHead>>` and `<<ctpTail>>` respectively. These objects are structured the same as the objects in `stack`.
 
 #### The content object
 
