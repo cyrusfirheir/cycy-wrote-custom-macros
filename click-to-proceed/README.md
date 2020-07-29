@@ -46,7 +46,7 @@ See [more examples](#examples).
 Keywords for controlling behavior:  
 - `clear`: Clears the content of the previous block. Use for replacing.
 - `nobr`: Appends content to the same line as the last block instead of going to a new line.
-- `t8n` or `transition`: Custom CSS animation based transition (250ms fade-in by default).
+- `t8n` or `transition`: Custom CSS animation based transition (400ms fade-in by default).
 - (delay): A valid CSS time value (e.g. `3s` or `250ms`) to delay the display of the block by.
 
 Additional keywords for individual blocks (`<<ctpNext>>`, `<<ctpHead>>`, `<<ctpTail>>`) in a chain (these are used to break out of behavior set by the `<<ctp>>` macro):
