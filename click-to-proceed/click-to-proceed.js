@@ -44,7 +44,7 @@
       nobr: mods.includes("nobr") && !mods.includes("br"),
       transition: mods.includesAny("t8n", "transition") && !mods.includesAny("noT8n", "noTransition"),
       delay: Util.fromCssTime(mods.find(function (el) {
-        return /\d+m?s/.test(el);
+        return /[0-9\.]+m?s/.test(el);
       }) || "0s"),
       re: mods.includes("redo"),
       content: content
