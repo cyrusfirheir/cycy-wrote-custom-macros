@@ -30,19 +30,28 @@ Syntax is exactly the same as that of the `<<print>>` macro (documentation [here
 
 The `<<update>>` (aka `<<upd>>`) macro triggers the a synthetic event `:liveupdate` to update the live displays created using the `<<live>>` macro.
 
+Optionally takes in variable names as arguments to specify what is being updated.
+
 
 ## Usage
 
 ```html
 <<set $testVar to 0>>
+<<set $testVar2 to 0>>
 
 Counter: <<live $testVar>>
+Counter2: <<live $testVar2>>
 
 <!-- Whenever the following button is clicked, the above display of $testVar will get updated with newer values -->
-
-<<button "Update to <<live $testVar + 1>>">>
+<<button "Update Counter to <<live $testVar + 1>>">>
   <<set $testVar++>>
-  <<update>>
+  <<update "$testVar">>
+<</button>>
+
+<!-- Whenever the following button is clicked, both counters will get updated together -->
+<<button "Update Counter to <<live $testVar + 1>> and Counter2 to <<live $testVar2 + 1>>">>
+  <<set $testVar++, $testVar2++>>
+  <<update>> <!-- in this example this is the same as <<update "$testVar" "$testVar2">> -->
 <</button>>
 ```
 
@@ -53,6 +62,19 @@ Just trigger this synthetic event:
 
 ```js
 $(document).trigger(":liveupdate");
+```
+
+To specify which variables to update:
+
+```js
+$(document).trigger({
+  type: ":liveupdate",
+  sources: [
+    "globalVariableName",
+    "$twineScriptVar",
+    "_temporary"
+  ]
+});
 ```
 
 ---

@@ -1,18 +1,28 @@
-(function() {
+(function () {
   "use strict";
 
   $(document).on(':liveupdate', function (ev) {
-    $('[data-bind^="src:"]').each(function (index) {
-      var $src = $(this).data('bind').replace('src:', "").trim();
-      var $val = $('<div></div>').wiki(Scripting.evalJavaScript($src)).html();
-      if ($(this).html() !== $val) $(this).empty().wiki($val);
-    });
+    if (ev.sources.length) {
+      ev.sources.forEach(function (el) {
+        $('[data-bind~="' + Scripting.parse(el) + '"]').each(function () {
+          var $src = $(this).data('bind').replace('src:', "").trim();
+          $(this).empty().wiki(Scripting.evalJavaScript($src));
+        });
+      });
+    } else {
+      $('[data-bind^="src:"]').each(function () {
+        var $src = $(this).data('bind').replace('src:', "").trim();
+        $(this).empty().wiki(Scripting.evalJavaScript($src));
+      });
+    }
   });
 
   Macro.add(['update', 'upd'], {
-    skipArgs: true,
     handler: function handler() {
-      $(document).trigger(':liveupdate');
+      $(document).trigger({
+        type: ':liveupdate',
+        sources: this.args
+      });
     }
   });
 
