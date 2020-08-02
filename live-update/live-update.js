@@ -2,7 +2,7 @@
   "use strict";
 
   $(document).on(':liveupdate', function (ev) {
-    if (ev.sources.length) {
+    if (ev.sources && ev.sources.length) {
       ev.sources.forEach(function (el) {
         $('[data-bind~="' + Scripting.parse(el) + '"]').each(function () {
           var $src = $(this).data('bind').replace('src:', "").trim();
