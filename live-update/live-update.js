@@ -1,28 +1,13 @@
 (function () {
   "use strict";
 
-  $(document).on(':liveupdate', function (ev) {
-    if (ev.sources && ev.sources.length) {
-      ev.sources.forEach(function (el) {
-        $('[data-bind~="' + Scripting.parse(el) + '"]').each(function () {
-          var $src = $(this).data('bind').replace('src:', "").trim();
-          $(this).empty().wiki(Scripting.evalJavaScript($src));
-        });
-      });
-    } else {
-      $('[data-bind^="src:"]').each(function () {
-        var $src = $(this).data('bind').replace('src:', "").trim();
-        $(this).empty().wiki(Scripting.evalJavaScript($src));
-      });
-    }
+  $(document).on(":liveupdate", function () {
+    $(".macro-live").trigger(":liveupdateinternal");
   });
 
   Macro.add(['update', 'upd'], {
     handler: function handler() {
-      $(document).trigger({
-        type: ':liveupdate',
-        sources: this.args
-      });
+      $(document).trigger(':liveupdate');
     }
   });
 
@@ -33,9 +18,32 @@
         return this.error('no expression specified');
       }
       try {
-        var result = toStringOrDefault(Scripting.evalJavaScript(this.args.full), null);
+        var statement = this.args.full;
+        var result = toStringOrDefault(Scripting.evalJavaScript(statement), null);
         if (result !== null) {
-          new Wikifier(this.output, '<span data-bind="src: ' + Util.escape(this.args.full) + '">' + (this.name === 'lh' ? Util.escape(result) : result) + "</span>");
+          var lh = this.name === "lh";
+          var $el = $("<span></span>").addClass("macro-live").wiki(lh ? Util.escape(result) : result).appendTo(this.output);
+          $el.on(":liveupdateinternal", function (ev) {
+            var out = toStringOrDefault(Scripting.evalJavaScript(statement), null);
+            $el.empty().wiki(lh ? Util.escape(out) : out);
+          });
+        }
+      } catch (ex) {
+        return this.error("bad evaluation: " + (_typeof(ex) === 'object' ? ex.message : ex));
+      }
+    }
+  });
+
+  Macro.add(['liveblock', 'lb'], {
+    tags: null,
+    handler: function handler() {
+      try {
+        var content = this.payload[0].contents.trim();
+        if (content) {
+          var $el = $("<span></span>").addClass("macro-live macro-live-block").wiki(content).appendTo(this.output);
+          $el.on(":liveupdateinternal", function (ev) {
+            $el.empty().wiki(content);
+          });
         }
       } catch (ex) {
         return this.error("bad evaluation: " + (_typeof(ex) === 'object' ? ex.message : ex));
