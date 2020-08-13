@@ -1,13 +1,31 @@
 (function () {
   "use strict";
 
+  $(document).on(":liveupdate", function () {
+    $(".macro-live").trigger(":liveupdateinternal");
+  });
+
+  /**
+   * Updates all 'live' expressions and blocks in the page.
+   * @kind macro
+   * @name update
+   * @alias upd
+   */
   Macro.add(['update', 'upd'], {
     handler: function handler() {
       $(document).trigger(":liveupdate");
-      $(".macro-live").trigger(':liveupdateinternal');
     }
   });
 
+  /**
+   * Makes an expression 'live', allowing for it to be changed without a passage transition with the `update` macro.
+   * @kind macro
+   * @name live
+   * @alias l
+   * @alias lh
+   * @param {expression}
+   * @returns Result of input expression
+   */
   Macro.add(['live', 'l', 'lh'], {
     skipArgs: true,
     handler: function handler() {
@@ -31,6 +49,12 @@
     }
   });
 
+  /**
+   * Makes an entire section/block of script 'live', allowing for it to be changed without a passage transition with the `update` macro.
+   * @kind container macro
+   * @name liveblock
+   * @alias lb
+   */
   Macro.add(['liveblock', 'lb'], {
     tags: null,
     handler: function handler() {
