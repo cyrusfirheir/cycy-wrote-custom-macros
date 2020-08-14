@@ -7,9 +7,9 @@ Using nested `<<linkreplace>>` and `<<linkappend>>` works, but gets tedious and 
 
 ## Installation
 
-If using the Twine desktop/web app, copy contents of `click-to-proceed.js` to `Story JavaScript`, and contents of `click-to-proceed.css` to `Story Stylesheet`.
+If using the Twine desktop/web app, copy contents of `click-to-proceed.d.js` to `Story JavaScript`, and contents of `click-to-proceed.css` to `Story Stylesheet`.
 
-If using a compiler like Tweego, drop `click-to-proceed.js` and `click-to-proceed.css` to your source folder.
+If using a compiler like Tweego, drop `click-to-proceed.d.js` and `click-to-proceed.css` to your source folder.
 
 
 ## Example Usage

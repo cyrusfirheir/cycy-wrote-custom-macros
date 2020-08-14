@@ -5,9 +5,9 @@ A set of two macros to make life easier when updating a variable and its display
 
 ## Installation
 
-If using the Twine web/desktop app, copy the contents of `live-update.js` into the `Edit Story JavaScript` section.
+If using the Twine web/desktop app, copy the contents of `live-update.d.js` into the `Edit Story JavaScript` section.
 
-If using a compiler like Tweego, just include `live-update.js` in your source directory.
+If using a compiler like Tweego, just include `live-update.d.js` in your source directory.
 
 
 ## Macros
