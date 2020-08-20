@@ -125,13 +125,6 @@
     return this;
   };
 
-  /**
-   * Create a CTP block.
-   * @kind container macro
-   * @name ctp
-   * @param {string} ID Unique identifier for this CTP block.
-   * @param {...string} Keywords Special keywords which affect the entire CTP chain.
-   */
   Macro.add("ctp", {
     tags: ["ctpNext", "ctpHead", "ctpTail"],
     handler: function handler() {
@@ -149,13 +142,6 @@
         switch (el.name) {
           case "ctpHead":
             {
-              /**
-               * Create a Head section for the CTP block. This section gets *prepended* to the body of the CTP, and is re-evaluated after each `ctpAdvance`.
-               * @kind macro
-               * @name ctpHead
-               * @extends ctp
-               * @param {...string} Keywords Special keywords which affect the entire CTP chain.
-               */
               var _head = CTP.contentObject(el.contents.trim(), _args + _overArgs);
               _head.index = "head";
               ctp.head = _head;
@@ -163,13 +149,6 @@
             }
           case "ctpTail":
             {
-              /**
-               * Create a Tail section for the CTP block. This section gets *appended* to the body of the CTP, and is re-evaluated after each `ctpAdvance`.
-               * @kind macro
-               * @name ctpTail
-               * @extends ctp
-               * @param {...string} Keywords Special keywords which affect the entire CTP chain.
-               */
               var _tail = CTP.contentObject(el.contents.trim(), _args + _overArgs);
               _tail.index = "tail";
               ctp.tail = _tail;
@@ -188,12 +167,6 @@
     }
   });
 
-  /**
-   * Advance a specific CTP block.
-   * @kind macro
-   * @name ctpAdvance
-   * @param {string} ID Unique identifier for the CTP block to advance.
-   */
   Macro.add("ctpAdvance", {
     handler: function handler() {
       var ctp = CTP.getCTP(this.args[0]);
@@ -201,12 +174,6 @@
     }
   });
 
-  /**
-   * Undo a specific CTP block.
-   * @kind macro
-   * @name ctpBack
-   * @param {string} ID Unique identifier for the CTP block to undo.
-   */
   Macro.add("ctpBack", {
     handler: function handler() {
       var ctp = CTP.getCTP(this.args[0]);
