@@ -9,6 +9,8 @@ If using the Twine web/desktop app, copy the contents of `live-update.js` into t
 
 If using a compiler like Tweego, just include `live-update.js` in your source directory.
 
+`live-update.twee-config.yaml` can also be added to the workspace if using the [Twee 3 Language Tools](https://marketplace.visualstudio.com/items?itemName=cyrusfirheir.twee3-language-tools) VSCode extension, for macro definitions.
+
 
 ## Macros
 
@@ -16,42 +18,42 @@ If using a compiler like Tweego, just include `live-update.js` in your source di
 
 ### Live display macros
 
- - `<<live>>`, `<<l>>`, or `<<lh>>`
+- `<<live>>`, `<<l>>`, or `<<lh>>`
 
- The `<<live>>` (aka `<<l>>`) macro is used in place of the `<<print>>` (aka `<<=>>`) macro to ensure that the expression in it gets re-evaluated and updated whenever its value is changed using the `<<update>>` macro.
+The `<<live>>` (aka `<<l>>`) macro is used in place of the `<<print>>` (aka `<<=>>`) macro to ensure that the expression in it gets re-evaluated and updated whenever its value is changed using the `<<update>>` macro.
 
- `<<lh>>` (substitute for `<<->>`) is functionally identical to the `<<live>>` macro, except that it encodes special HTML characters in the output.
+`<<lh>>` (substitute for `<<->>`) is functionally identical to the `<<live>>` macro, except that it encodes special HTML characters in the output.
 
- Syntax is exactly like that of the `<<print>>` macro (documentation [here](https://www.motoslave.net/sugarcube/2/docs/#macros-macro-print)).
+Syntax is exactly like that of the `<<print>>` macro (documentation [here](https://www.motoslave.net/sugarcube/2/docs/#macros-macro-print)).
 
- - `<<liveblock>>` or `<<lb>>`
+- `<<liveblock>>` or `<<lb>>`
 
- This is a container macro for entire sections of code. Can be used to re-render bigger chunks without having to resort to the `<<include>>` macro pulling the code from some passage.
+This is a container macro for entire sections of code. Can be used to re-render bigger chunks without having to resort to the `<<include>>` macro pulling the code from some passage.
 
- Example:
+Example:
 
- ```html
- <<set $key to undefined>>
+```html
+<<set $key to undefined>>
 
- <<liveblock>>
-   <<if $key is "red">>
-     You picked up the red key!
-   <<elseif $key is "blep">>
-     The key disappears… You are unlucky. Go home.
-   <<else>>
-     <<button "Pick up Key">>
-       <<set $key to either("red", "blep")>> <!-- 50% chance of getting the key -->
-       <<update>>
-     <</button>>
-   <</if>>
- <</liveblock>>
- ```
+<<liveblock>>
+	<<if $key is "red">>
+		You picked up the red key!
+	<<elseif $key is "blep">>
+		The key disappears… You are unlucky. Go home.
+	<<else>>
+		<<button "Pick up Key">>
+		<<set $key to either("red", "blep")>> <!-- 50% chance of getting the key -->
+		<<update>>
+		<</button>>
+	<</if>>
+<</liveblock>>
+```
 
 ### Display update macros
 
- - `<<update>>` or `<<upd>>`
+- `<<update>>` or `<<upd>>`
 
- The `<<update>>` (aka `<<upd>>`) macro triggers the a synthetic event `:liveupdate` to update the live displays created using the `<<live>>` macro.
+The `<<update>>` (aka `<<upd>>`) macro triggers the a synthetic event `:liveupdate` to update the live displays created using the `<<live>>` macro.
 
 
 ## Usage
@@ -60,27 +62,27 @@ If using a compiler like Tweego, just include `live-update.js` in your source di
 <<set $testVar to 0, $testVar2 to 0>>
 
 <<button "Add 1">>
-  <<set $testVar++>>
-  <<update>>
+	<<set $testVar++>>
+	<<update>>
 <</button>>
 
 $testVar : this is potato - no updates
 
 <<button "Add 1">>
-  <<set $testVar2++>>
-  <<update>>
+	<<set $testVar2++>>
+	<<update>>
 <</button>>
 
 <<live $testVar2>> : this is live
 
 <!-- block level -->
 <<button "Add 1 to both">>
-  <<set $testVar++, $testVar2++>>
-  <<update>>
+	<<set $testVar++, $testVar2++>>
+	<<update>>
 <</button>>
 
 <<liveblock>>
-  $testVar, $testVar2
+	$testVar, $testVar2
 <</liveblock>> : both are live!
 ```
 

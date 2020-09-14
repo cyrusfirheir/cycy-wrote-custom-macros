@@ -11,6 +11,8 @@ If using the Twine desktop/web app, copy contents of `click-to-proceed.js` to `S
 
 If using a compiler like Tweego, drop `click-to-proceed.js` and `click-to-proceed.css` to your source folder.
 
+`click-to-proceed.twee-config.yaml` can also be added to the workspace if using the [Twee 3 Language Tools](https://marketplace.visualstudio.com/items?itemName=cyrusfirheir.twee3-language-tools) VSCode extension, for macro definitions.
+
 
 ## Example Usage
 
@@ -114,7 +116,7 @@ The main body of the CTP chain is always rendered first, before `<<ctpHead>>` or
   This is the first block. Declare any variables to be used by ctpHead in here.
 <<ctpHead>>
   <<if _ctp.log.index is 1>>
-    <!-- do stuff if this is the second block -->
+	<!-- do stuff if this is the second block -->
   <</if>>
 <<ctpNext>>
   This is the second!
@@ -141,7 +143,7 @@ The main body of the CTP chain is always rendered first, before `<<ctpHead>>` or
   This is the second!
 <<ctpTail>>
   <<if _ctp.log.index is 1>>
-    <!-- do stuff if this is the second block -->
+	<!-- do stuff if this is the second block -->
   <</if>>
 <</ctp>>
 ```
@@ -376,9 +378,9 @@ In Passage:
   This is the first string.
 <<ctpHead>>
   <<if _ctp.log.index gt 0>>
-    <<button "Back">>
-      <<ctpBack "testID">>
-    <</button>>
+	<<button "Back">>
+	  <<ctpBack "testID">>
+	<</button>>
   <</if>>
 <<ctpNext clear>>
   Second! It cleared the first one out!
@@ -390,9 +392,9 @@ In Passage:
   And the final one. With a transition!
 <<ctpTail>>
   <<if _ctp.log.index lt _ctp.stack.length - 1>>
-    <<button "Next">>
-      <<ctpAdvance "testID">>
-    <</button>>
+	<<button "Next">>
+	  <<ctpAdvance "testID">>
+	<</button>>
   <</if>>
 <</ctp>>
 ```

@@ -7,6 +7,8 @@ A few macros that were living in GitHub Gists till now. Decided on moving them t
 
 Download this repository (easiest way to grab everything, really) and cherry pick whatever you want in your project. Some might have CSS files, others won't, but everything you need is there. Along with a `README.md` for each macro which has further instructions on installation and usage.
 
+Each macro set provides a `<macro-name>.twee-config.yaml` file which can also be added to workspace if using the [Twee 3 Language Tools](https://marketplace.visualstudio.com/items?itemName=cyrusfirheir.twee3-language-tools) VSCode extension, for macro definitions of that set. It's recommended for error diagnostics.
+
 ## Macro sets
 
 > ***NOTE:***  

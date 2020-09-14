@@ -1,0 +1,18 @@
+sugarcube-2:
+  macros:
+    live:
+      name: live
+    l:
+      name: l
+    lh:
+      name: lh
+    liveblock:
+      name: liveblock
+      container: true
+    lb:
+      name: lb
+      container: true
+    update:
+      name: update
+    upd:
+      name: upd
