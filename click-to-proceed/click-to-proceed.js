@@ -31,8 +31,9 @@
 
 	CTP.getCTP = function (id) {
 		var clone = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-		if (!id || !id.trim()) return;
+		if (!id || !id.trim()) throw new Error("No ID specified!");
 		variables()["#macro-ctp-dump"] = variables()["#macro-ctp-dump"] || {};
+		if (!variables()["#macro-ctp-dump"][id]) throw new Error("No CTP with ID '" + id + "' found!");
 		return clone ? variables()["#macro-ctp-dump"][id].clone() : variables()["#macro-ctp-dump"][id];
 	};
 
@@ -128,6 +129,7 @@
 	Macro.add("ctp", {
 		tags: ["ctpNext", "ctpHead", "ctpTail"],
 		handler: function handler() {
+			if (this.args.length === 0) return this.error("No ID specified!");
 			var _id = this.args[0];
 			var _data = 'data-ctp="' + Util.escape(_id) + '"';
 			var ctp = new CTP({
@@ -169,15 +171,23 @@
 
 	Macro.add("ctpAdvance", {
 		handler: function handler() {
-			var ctp = CTP.getCTP(this.args[0]);
-			if (ctp) ctp.advance();
+			try {
+				let ctp = CTP.getCTP(this.args[0]);
+				if (ctp) ctp.advance();
+			} catch (ex) {
+				throw new Error(_typeof(ex) === 'object' ? ex.message : ex);
+			}
 		}
 	});
 
 	Macro.add("ctpBack", {
 		handler: function handler() {
-			var ctp = CTP.getCTP(this.args[0]);
-			if (ctp) ctp.back();
+			try {
+				let ctp = CTP.getCTP(this.args[0]);
+				if (ctp) ctp.back();
+			} catch (ex) {
+				throw new Error(_typeof(ex) === 'object' ? ex.message : ex);
+			}
 		}
 	});
 

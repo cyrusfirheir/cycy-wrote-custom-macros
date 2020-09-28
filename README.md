@@ -9,6 +9,8 @@ Download this repository (easiest way to grab everything, really) and cherry pic
 
 Each macro set provides a `<macro-name>.twee-config.yaml` file which can also be added to workspace if using the [Twee 3 Language Tools](https://marketplace.visualstudio.com/items?itemName=cyrusfirheir.twee3-language-tools) VSCode extension, for macro definitions of that set. It's recommended for error diagnostics.
 
+Besides that, there's a `cycy.twee-config.yaml` in the root of the repo, and that has definitions for *all* the macro-sets in one file. This is the better way to go about it.
+
 ## Macro sets
 
 > ***NOTE:***  
