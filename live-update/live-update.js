@@ -5,10 +5,6 @@
 		$(".macro-live").trigger(":liveupdateinternal");
 	});
 
-	$(document).on(":liveupdate", function () {
-		$(".macro-live").trigger(":liveupdateinternal");
-	});
-
 	Macro.add(['update', 'upd'], {
 		handler: function handler() {
 			$(document).trigger(":liveupdate");
