@@ -340,8 +340,8 @@ ctpTest.out();
 ```js
 $("#test-ctp-element")
 	.wiki(ctpTest.out())
-	.find(".macro-ctp-wrapper .ctp-head").wiki(CTP.item(ctp.head))
-	.siblings(".ctp-tail").wiki(CTP.item(ctp.tail));
+	.find(".macro-ctp-wrapper .ctp-head").wiki(CTP.item(ctpTest.head))
+	.siblings(".ctp-tail").wiki(CTP.item(ctpTest.tail));
 
 /* Returns:
  *
