@@ -217,7 +217,7 @@ CTP.getCTP("testID");
 
 `id`: *(string)* Unique ID.  
 `selector`: *(string)* CSS selector to target to output to. When used by the macro, this is the slugified form of `id`.  
-`stack`: *(array)* An array of (content)[#the-content-object] objects.
+`stack`: *(array)* An array of [content](#the-content-object) objects.
 `head` and `tail`: *(object)* Contain the `<<ctpHead>>` and `<<ctpTail>>` respectively. These objects are structured the same as the objects in `stack`.  
 `log`: *(object)* Keeps track of blocks and their behaviors:  
 - `index`: *(whole number)* Current index of block (zero-based).  
