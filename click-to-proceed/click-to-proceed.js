@@ -165,7 +165,7 @@
 			});
 			variables()["#macro-ctp-dump"] = variables()["#macro-ctp-dump"] || {};
 			variables()["#macro-ctp-dump"][_id] = ctp;
-			$(this.output).wiki(ctp.out()).find(".macro-ctp-wrapper").attr("data-ctp", Util.escape(_id)).find(".ctp-head").wiki(CTP.item(ctp.head)).parent().find(".ctp-tail").wiki(CTP.item(ctp.tail));
+			$(this.output).wiki(ctp.out()).find(".macro-ctp-wrapper").attr("data-ctp", Util.escape(_id)).find(".ctp-head").wiki(CTP.item(ctp.head)).siblings(".ctp-tail").wiki(CTP.item(ctp.tail));
 		}
 	});
 

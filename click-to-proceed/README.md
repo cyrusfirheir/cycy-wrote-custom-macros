@@ -314,7 +314,9 @@ ctpTest.entry(2);
 
 ### `<CTP Object>.out()`
 
-Returns the HTML output for setting up the chain with the structure and the first block.
+Returns the HTML string output for setting up the chain with the structure and the first block.
+
+**NOTE:** This does NOT return the contents of the `head` and `tail`. That needs to be done manually (see second example.)
 
 **Example:**
 
@@ -331,6 +333,30 @@ ctpTest.out();
  *    </span>
  *  </span>
  *  <span class="ctp-tail"></span>
+ * </span>
+ */
+```
+
+```js
+$("#test-ctp-element")
+	.wiki(ctpTest.out())
+	.find(".macro-ctp-wrapper .ctp-head").wiki(CTP.item(ctp.head))
+	.siblings(".ctp-tail").wiki(CTP.item(ctp.tail));
+
+/* Returns:
+ *
+ * <span class="macro-ctp-wrapper">
+ *  <span class="ctp-head">
+ * 		Head content
+ * </span>
+ *  <span class="ctp-body">
+ *    <span class="macro-ctp-entry macro-ctp-entry-index-0">
+ *      Content
+ *    </span>
+ *  </span>
+ *  <span class="ctp-tail">
+ * 		Tail content
+ * 	</span>
  * </span>
  */
 ```
