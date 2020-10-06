@@ -294,6 +294,39 @@ ctpTest.back();
 
 ---
 
+### `<CTP Object>.go(diff)`
+
+Jumps to a specific block ***by*** the specified number of blocks.
+
+- `diff`: *(integer)* How many blocks to move by. Positive integers signify forward movement (like `advance()`) and negative integers signify backward movement (like `back()`).
+
+**Example:**
+
+```js
+// advance() twice
+ctpTest.go(2);
+
+// go back() twice
+ctpText.go(-2);
+```
+
+---
+
+### `<CTP Object>.go(index)`
+
+Jumps to a specific block ***to*** the specified index of block.
+
+- `index`: *(whole number)* Index of the CTP chain to jump to.
+
+**Example:**
+
+```js
+// go to the 5th block
+ctpTest.goTo(4);
+```
+
+---
+
 ### `<CTP Object>.entry(index [, noT8n])`
 
 Returns the HTML output for a single block at the index passed into it.

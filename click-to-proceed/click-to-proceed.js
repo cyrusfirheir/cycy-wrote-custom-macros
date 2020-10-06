@@ -80,28 +80,49 @@
 		return '<span class="macro-ctp-wrapper">' + '<span class="ctp-head"></span>' + '<span class="ctp-body">' + this.entry(0) + '</span>' + '<span class="ctp-tail"></span>' + '</span>';
 	};
 
+	CTP.prototype.go = function (diff) {
+		if (!Number.isInteger(diff)) throw new Error(`Cannot move by non-integral amounts!`);
+		if (diff > 0) {
+			for (var i = 0; i < diff; i++) {
+				this.advance(true);
+			}
+		} else if (diff < 0) {
+			for (var _i = 0; _i < -diff; _i++) {
+				this.back();
+			}
+		}
+	};
+
+	CTP.prototype.goTo = function (index) {
+		this.go(index - this.log.index);
+	};
+
 	CTP.prototype.advance = function () {
+		var noDelay = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 		var _this = this;
-		var seen = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 		if (this.log.index === this.stack.length - 1 || this.log.delayed) return;
 		var index = ++this.log.index;
-		if (!seen) this.log.seen = index;
+		this.log.seen = Math.max(this.log.seen, index);
 		var _el = $(this.selector).find(".ctp-body");
 		if (this.stack[index].clear) {
 			_el.children().hide();
 			this.log.clear = index - 1;
 		}
-		this.log.delayed = true;
 		function delay(ctp) {
 			ctp.log.delayed = false;
 			$(ctp.selector).find(".ctp-body").wiki(ctp.entry(ctp.log.index)).siblings(".ctp-head").empty().wiki(CTP.item(ctp.head)).siblings(".ctp-tail").empty().wiki(CTP.item(ctp.tail));
 		}
-		return new Promise(function (resolve, reject) {
-			setTimeout(function () {
-				delay(_this);
-				resolve("advanced");
-			}, _this.stack[index].delay);
-		});
+		if (noDelay) {
+			delay(_this);
+		} else {
+			this.log.delayed = true;
+			return new Promise(function (resolve, reject) {
+				setTimeout(function () {
+					delay(_this);
+					resolve("advanced");
+				}, _this.stack[index].delay);
+			});
+		}
 	};
 
 	CTP.prototype.back = function () {
@@ -172,7 +193,7 @@
 	Macro.add("ctpAdvance", {
 		handler: function handler() {
 			try {
-				let ctp = CTP.getCTP(this.args[0]);
+				var ctp = CTP.getCTP(this.args[0]);
 				if (ctp) ctp.advance();
 			} catch (ex) {
 				throw new Error(_typeof(ex) === 'object' ? ex.message : ex);
@@ -183,7 +204,7 @@
 	Macro.add("ctpBack", {
 		handler: function handler() {
 			try {
-				let ctp = CTP.getCTP(this.args[0]);
+				var ctp = CTP.getCTP(this.args[0]);
 				if (ctp) ctp.back();
 			} catch (ex) {
 				throw new Error(_typeof(ex) === 'object' ? ex.message : ex);
