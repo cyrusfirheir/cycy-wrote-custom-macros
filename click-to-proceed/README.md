@@ -312,7 +312,7 @@ ctpText.go(-2);
 
 ---
 
-### `<CTP Object>.go(index)`
+### `<CTP Object>.goTo(index)`
 
 Jumps to a specific block ***to*** the specified index of block.
 
