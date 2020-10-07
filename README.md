@@ -11,7 +11,7 @@ Each macro set provides a `<macro-name>.twee-config.yaml` file which can also be
 
 Besides that, there's a `cycy.twee-config.yaml` in the root of the repo, and that has definitions for *all* the macro-sets in one file. This is the better way to go about it.
 
-## Macro sets
+## Macro sets and libraries
 
 > ***NOTE:***  
 > If you've used previous versions of the macros from GitHub Gists, I'd recommend going through the README files again. There are some changes incompatible with those earlier versions.
@@ -21,9 +21,13 @@ Besides that, there's a `cycy.twee-config.yaml` in the root of the repo, and tha
     - Primarily made for VN like interfaces.  
 
 
-2. [Live-Update](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/blob/master/live-update)  
+2. [Live Update](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/blob/master/live-update)  
     - Make the *display* of an expression 'live' and 'update' every such display to see the changes instantly.
     - Under the hood, it works similarly to how the `<<replace>>` and other DOM macros do, but on the surface, it's *wayyy* simpler to use.
+
+3. [Rock paper scissors (RPS)](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/blob/master/rock-paper-scissors)
+	- Makes RPS logic simpler.
+	- Works for more than just three elements.
 
 ---
 
