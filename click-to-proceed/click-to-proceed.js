@@ -66,7 +66,7 @@
 		var t8n = noT8n ? "" : item.transition ? "macro-ctp-entry-t8n" : "";
 		var br = item.index === 0 || item.index === "head" || item.clear ? " " : item.nobr ? " " : '<br class="macro-ctp-entry-index-' + item.index + '">';
 		var brAfter = item.index === "head" && !item.nobr ? "<br>" : " ";
-		return br + '<span class="macro-ctp-entry macro-ctp-entry-index-' + item.index + ' ' + t8n + '">' + item.content + '</span>' + brAfter;
+		return br + '<span class="macro-ctp-visible macro-ctp-entry macro-ctp-entry-index-' + item.index + ' ' + t8n + '">' + item.content + '</span>' + brAfter;
 	};
 
 	CTP.prototype.entry = function (index) {
@@ -105,7 +105,7 @@
 		this.log.seen = Math.max(this.log.seen, index);
 		var _el = $(this.selector).find(".ctp-body");
 		if (this.stack[index].clear) {
-			_el.children().hide();
+			_el.children().removeClass("macro-ctp-visible").hide();
 			this.log.clear = index - 1;
 		}
 		function delay(ctp) {
@@ -135,7 +135,7 @@
 			});
 			if (_clear.length) clearIndex = _clear[_clear.length - 1].index;
 			this.stack.slice(clearIndex, this.log.index + 1).forEach(function (el) {
-				$(_this3.selector).find(".macro-ctp-entry-index-" + el.index).show();
+				$(_this3.selector).find(".macro-ctp-entry-index-" + el.index).addClass("macro-ctp-visible").show();
 			}, this);
 		}
 		var item = this.stack[this.log.index];
