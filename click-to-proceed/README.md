@@ -102,7 +102,7 @@ To be used inside `<<ctp>>` to separate the content into blocks.
 
 ### `<<ctpHead [keywords]>>`
 
-To be used inside `<<ctp>>` as a block *prepended* to the chain which is re-evaluated at every `<<ctpAdvace>>` and `<<ctpBack>>`. As long as it is inside `<<ctp>>`, the position does not matter.
+To be used inside `<<ctp>>` as a block *prepended* to the chain which is re-evaluated at every `<<ctpAdvance>>` and `<<ctpBack>>`. As long as it is inside `<<ctp>>`, the position does not matter.
 
 The main body of the CTP chain is always rendered first, before `<<ctpHead>>` or `<<ctpTail>>`.
 
@@ -127,7 +127,7 @@ The main body of the CTP chain is always rendered first, before `<<ctpHead>>` or
 
 ### `<<ctpTail [keywords]>>`
 
-To be used inside `<<ctp>>` as a block *appended* to the chain which is re-evaluated at every `<<ctpAdvace>>` and `<<ctpBack>>`. As long as it is inside `<<ctp>>`, the position does not matter.
+To be used inside `<<ctp>>` as a block *appended* to the chain which is re-evaluated at every `<<ctpAdvance>>` and `<<ctpBack>>`. As long as it is inside `<<ctp>>`, the position does not matter.
 
 The main body of the CTP chain is always rendered first, before `<<ctpHead>>` or `<<ctpTail>>`.
 
