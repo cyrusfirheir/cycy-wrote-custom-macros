@@ -103,14 +103,14 @@
 		if (this.log.index === this.stack.length - 1 || this.log.delayed) return;
 		var index = ++this.log.index;
 		this.log.seen = Math.max(this.log.seen, index);
-		var _el = $(this.selector).find(".ctp-body");
+		var _el = $(this.selector).children(".ctp-body");
 		if (this.stack[index].clear) {
 			_el.children().removeClass("macro-ctp-visible").hide();
 			this.log.clear = index - 1;
 		}
 		function delay(ctp) {
 			ctp.log.delayed = false;
-			$(ctp.selector).find(".ctp-body").wiki(ctp.entry(ctp.log.index)).siblings(".ctp-head").empty().wiki(CTP.item(ctp.head)).siblings(".ctp-tail").empty().wiki(CTP.item(ctp.tail));
+			$(ctp.selector).children(".ctp-body").wiki(ctp.entry(ctp.log.index)).siblings(".ctp-head").empty().wiki(CTP.item(ctp.head)).siblings(".ctp-tail").empty().wiki(CTP.item(ctp.tail));
 		}
 		if (noDelay) {
 			delay(_this);
@@ -135,15 +135,15 @@
 			});
 			if (_clear.length) clearIndex = _clear[_clear.length - 1].index;
 			this.stack.slice(clearIndex, this.log.index + 1).forEach(function (el) {
-				$(_this3.selector).find(".macro-ctp-entry-index-" + el.index).addClass("macro-ctp-visible").show();
+				$(_this3.selector).children(".ctp-body").children(".macro-ctp-entry-index-" + el.index).addClass("macro-ctp-visible").show();
 			}, this);
 		}
 		var item = this.stack[this.log.index];
-		if (item.re) $(this.selector).find(".macro-ctp-entry.macro-ctp-entry-index-" + item.index).empty().wiki(item.content);
+		if (item.re) $(this.selector).children(".ctp-body").children(".macro-ctp-entry.macro-ctp-entry-index-" + item.index).empty().wiki(item.content);
 		this.stack.slice(this.log.index + 1, this.log.seen + 1).forEach(function (el) {
-			$(_this3.selector).find(".macro-ctp-entry-index-" + el.index).remove();
+			$(_this3.selector).children(".ctp-body").children(".macro-ctp-entry-index-" + el.index).remove();
 		}, this);
-		$(this.selector).find(".ctp-head").empty().wiki(CTP.item(this.head)).siblings(".ctp-tail").empty().wiki(CTP.item(this.tail));
+		$(this.selector).children(".ctp-head").empty().wiki(CTP.item(this.head)).siblings(".ctp-tail").empty().wiki(CTP.item(this.tail));
 		return this;
 	};
 
@@ -187,7 +187,7 @@
 			variables()["#macro-ctp-dump"] = variables()["#macro-ctp-dump"] || {};
 			variables()["#macro-ctp-dump"][_id] = ctp;
 			let out = $("<div />");
-			out.wiki(ctp.out()).find(".macro-ctp-wrapper").attr("data-ctp", Util.escape(_id)).find(".ctp-head").wiki(CTP.item(ctp.head)).siblings(".ctp-tail").wiki(CTP.item(ctp.tail));
+			out.wiki(ctp.out()).children(".macro-ctp-wrapper").attr("data-ctp", Util.escape(_id)).children(".ctp-head").wiki(CTP.item(ctp.head)).siblings(".ctp-tail").wiki(CTP.item(ctp.tail));
 			$(this.output).append(out.children().unwrap());
 		}
 	});
