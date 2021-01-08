@@ -7,19 +7,69 @@ sugarcube-2:
         - ctpNext
         - ctpHead
         - ctpTail
+      description: |-
+        The main CTP macro inside which all content is written.
+
+        Usage:
+        ```
+        <<ctp id [keywords]>>
+          …
+        <</ctp>>
+        ```
+        READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctp-id-keywords)
     ctpNext:
       name: ctpNext
       parents:
         - ctp
+      description: |-
+        To be used inside `<<ctp>>` to separate the content into blocks.
+        
+        Usage:
+        ```
+        <<ctpNext [keywords]>>
+        ```
+        READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctpnext-keywords)
     ctpHead:
       name: ctpHead
       parents:
         - ctp
+      description: |-
+        To be used inside `<<ctp>>` as a block *prepended* to the chain which is re-evaluated at every `<<ctpAdvance>>` and `<<ctpBack>>`. As long as it is inside `<<ctp>>`, the position does not matter.
+        
+        Usage:
+        ```
+        <<ctpHead [keywords]>>
+        ```
+        READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctphead-keywords)
     ctpTail:
       name: ctpTail
       parents:
         - ctp
+      description: |-
+        To be used inside `<<ctp>>` as a block *appended* to the chain which is re-evaluated at every `<<ctpAdvance>>` and `<<ctpBack>>`. As long as it is inside `<<ctp>>`, the position does not matter.
+        
+        Usage:
+        ```
+        <<ctpTail [keywords]>>
+        ```
+        READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctptail-keywords)
     ctpAdvance:
       name: ctpAdvance
+    description: |-
+        The 'proceed' part of Click To Proceed... Used to move the train forward and show the next blocks.
+        
+        Usage:
+        ```
+        <<ctpAdvance id>>
+        ```
+        READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctpadvance-id)
     ctpBack:
       name: ctpBack
+      description: |-
+        Turns back time and goes back one block.
+        
+        Usage:
+        ```
+        <<ctpBack id>>
+        ```
+        READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctpback-id)
