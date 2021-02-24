@@ -1,7 +1,9 @@
+# Live Update
 ## Overview
 
 A set of two macros to make life easier when updating a variable and its displays.
 
+---
 
 ## Installation
 
@@ -11,12 +13,16 @@ If using a compiler like Tweego, just include `live-update.js` in your source di
 
 `live-update.twee-config.yaml` can also be added to the workspace if using the [Twee 3 Language Tools](https://marketplace.visualstudio.com/items?itemName=cyrusfirheir.twee3-language-tools) VSCode extension, for macro definitions.
 
+---
 
 ## Macros
 
 ***NOTE:*** These macros are meant to be used only when the change in value needs to be shown without a passage transition. For other uses, please fall back to the `<<print>>` macro.
 
+---
+
 ### Live display macros
+
 
 - `<<live>>`, `<<l>>`, or `<<lh>>`
 
@@ -49,12 +55,15 @@ Example:
 <</liveblock>>
 ```
 
+---
+
 ### Display update macros
 
 - `<<update>>` or `<<upd>>`
 
 The `<<update>>` (aka `<<upd>>`) macro triggers the a synthetic event `:liveupdate` to update the live displays created using the `<<live>>` macro.
 
+---
 
 ## Usage
 
@@ -86,6 +95,7 @@ $testVar : this is potato - no updates
 <</liveblock>> : both are live!
 ```
 
+---
 
 ## Triggering the update from JavaScript
 

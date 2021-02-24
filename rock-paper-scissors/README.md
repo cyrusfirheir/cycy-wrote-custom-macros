@@ -1,7 +1,9 @@
+# Rock paper scissors (RPS)
 ## Overview
 
 A little library to make the rock-paper-scissor logic simpler. Can be used for any number of odd elements (except 1, of course.)
 
+---
 
 ## Installation
 
@@ -9,6 +11,7 @@ If using the Twine desktop/web app, copy contents of `rock-paper-scissors.js` to
 
 If using a compiler like Tweego, drop `rock-paper-scissors.js` to your source folder.
 
+---
 
 ## Example Usage
 
@@ -35,6 +38,8 @@ They played <<= _opponent>>.
 	It's a draw.
 <</if>>
 ```
+
+---
 
 ## Usage - The RPS object
 

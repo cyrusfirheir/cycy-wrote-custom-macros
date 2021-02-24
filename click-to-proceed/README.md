@@ -1,9 +1,11 @@
+# Click to Proceed (CTP)
 ## Overview
 
 This set of macros/functions aims to provide an easy way to set up content that is revealed bit-by-bit via user interaction.
 
 Using nested `<<linkreplace>>` and `<<linkappend>>` works, but gets tedious and is often prone to errors. The CTP (Click To Proceed: original-est name ever) macros make it a bit easier by turning them into blocks instead of nests.
 
+---
 
 ## Installation
 
@@ -13,6 +15,7 @@ If using a compiler like Tweego, drop `click-to-proceed.js` and `click-to-procee
 
 `click-to-proceed.twee-config.yaml` can also be added to the workspace if using the [Twee 3 Language Tools](https://marketplace.visualstudio.com/items?itemName=cyrusfirheir.twee3-language-tools) VSCode extension, for macro definitions.
 
+---
 
 ## Example Usage
 
@@ -40,6 +43,7 @@ See [more examples](#examples).
 <</link>>
 ```
 
+---
 
 ## Macros
 

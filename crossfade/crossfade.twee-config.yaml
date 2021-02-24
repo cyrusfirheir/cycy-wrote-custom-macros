@@ -1,0 +1,24 @@
+sugarcube-2:
+  macros:
+    crossfadecontainer:
+      name: crossfadecontainer
+      description: |-
+        Creates a container to use for crossfading between images.
+
+        Usage:
+        ```
+        <<crossfadecontainer id [initialImagePath]>>
+        ```
+      parameters:
+        - text |+ text
+    crossfade:
+      name: crossfade
+      description: |-
+        Crossfades between new image and image already in a pre-defined `<<crossfadecontainer>>`.
+        
+        Usage:
+        ```
+        <<crossfade id imagePath [fadeDuration]>>
+        ```
+      parameters:
+        - text &+ text |+ text

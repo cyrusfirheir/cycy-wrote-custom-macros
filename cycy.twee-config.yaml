@@ -75,7 +75,7 @@ sugarcube-2:
         READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctptail-keywords)
     ctpAdvance:
       name: ctpAdvance
-    description: |-
+      description: |-
         The 'proceed' part of Click To Proceed... Used to move the train forward and show the next blocks.
         
         Usage:
@@ -93,3 +93,27 @@ sugarcube-2:
         <<ctpBack id>>
         ```
         READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctpback-id)
+    
+    # crossfade.js
+    crossfadecontainer:
+      name: crossfadecontainer
+      description: |-
+        Creates a container to use for crossfading between images.
+
+        Usage:
+        ```
+        <<crossfadecontainer id [initialImagePath]>>
+        ```
+      parameters:
+        - text |+ text
+    crossfade:
+      name: crossfade
+      description: |-
+        Crossfades between new image and image already in a pre-defined `<<crossfadecontainer>>`.
+        
+        Usage:
+        ```
+        <<crossfade id imagePath [fadeDuration]>>
+        ```
+      parameters:
+        - text &+ text |+ text

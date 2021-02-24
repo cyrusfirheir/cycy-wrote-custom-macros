@@ -1,0 +1,12 @@
+.macro-crossfade {
+	position: relative;
+}
+
+.macro-crossfade > .macro-crossfade-image {
+	width: 100%;
+}
+
+.macro-crossfade > .macro-crossfade-image:last-of-type {
+	position: absolute;
+	top: 0; left: 0;
+}

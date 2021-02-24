@@ -17,6 +17,8 @@ sugarcube-2:
         <</ctp>>
         ```
         READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctp-id-keywords)
+      parameters:
+        - text &+ ...text
     ctpNext:
       name: ctpNext
       parents:
@@ -29,6 +31,8 @@ sugarcube-2:
         <<ctpNext [keywords]>>
         ```
         READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctpnext-keywords)
+      parameters:
+        - ...text
     ctpHead:
       name: ctpHead
       parents:
@@ -41,6 +45,8 @@ sugarcube-2:
         <<ctpHead [keywords]>>
         ```
         READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctphead-keywords)
+      parameters:
+        - ...text
     ctpTail:
       name: ctpTail
       parents:
@@ -53,9 +59,11 @@ sugarcube-2:
         <<ctpTail [keywords]>>
         ```
         READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctptail-keywords)
+      parameters:
+        - ...text
     ctpAdvance:
       name: ctpAdvance
-    description: |-
+      description: |-
         The 'proceed' part of Click To Proceed... Used to move the train forward and show the next blocks.
         
         Usage:
@@ -63,6 +71,8 @@ sugarcube-2:
         <<ctpAdvance id>>
         ```
         READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctpadvance-id)
+      parameters:
+        - text
     ctpBack:
       name: ctpBack
       description: |-
@@ -73,3 +83,5 @@ sugarcube-2:
         <<ctpBack id>>
         ```
         READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctpback-id)
+      parameters:
+        - text
