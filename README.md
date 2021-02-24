@@ -23,13 +23,13 @@ Besides that, there's a `cycy.twee-config.yaml` in the root of the repo, and tha
     - Clean way to reveal text block-by-block in the same passage without having to nest a million `<<linkreplace>>` macros.  
     - Primarily made for VN like interfaces.
 
-2. [Live Update](./live-update)  
-    - Make the *display* of an expression 'live' and 'update' every such display to see the changes instantly.  
-    - Under the hood, it works similarly to how the `<<replace>>` and other DOM macros do, but on the surface, it's *wayyy* simpler to use.
-
-3. [Crossfade](./crossfade)  
+2. [Crossfade](./crossfade)  
     - Crossfade between two images with simple macros.
     - Can be used to fade-in and fade-out too.
+
+3. [Live Update](./live-update)  
+    - Make the *display* of an expression 'live' and 'update' every such display to see the changes instantly.  
+    - Under the hood, it works similarly to how the `<<replace>>` and other DOM macros do, but on the surface, it's *wayyy* simpler to use.
 
 ---
 
