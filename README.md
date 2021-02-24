@@ -1,7 +1,4 @@
 # Cycy wrote custom macros
-### For SugarCube 2 (and beyond, hopefully)
-
-A few macros that were living in GitHub Gists till now. Decided on moving them to a repo. Makes my life easier, yanno?
 
 ---
 
