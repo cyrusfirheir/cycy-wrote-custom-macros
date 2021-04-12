@@ -1,4 +1,5 @@
 # Click to Proceed (CTP)
+
 ## Overview
 
 This set of macros/functions aims to provide an easy way to set up content that is revealed bit-by-bit via user interaction.
