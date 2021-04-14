@@ -14,7 +14,7 @@ The biggest challenge when trying to split up big chunks of text into smaller pa
 
 This library aims to help with that.
 
-And although this was primarily written for a stateful visual-novel interface, its potential still remains unexplored.
+And although this was initially written for a stateful visual-novel interface, its potential still remains unexplored.
 
 ---
 
@@ -133,6 +133,8 @@ Handlers make up one of the most important parts of an `NTree`. They decide how 
 
 		> ***NOTE:*** This index appears to be 1-based, but considering that the 0th index belongs to the parent macro, it is not by choice. It just is the default behavior. And because of this, the leaf index recorded in the `NTree` state also appears to be 1-based, when in fact, index 0 is just reserved.
 
+	- `branchID`: *(string)* ID of the `<<treebranch>>` the leaf is from.
+
 ---
 
 <i id="a-handler-fn-onclear"></i>
@@ -144,6 +146,8 @@ Handlers make up one of the most important parts of an `NTree`. They decide how 
 	- `currentPayload`: *(number)* The current `<<leaf>>`'s payload index in the `<<treebranch>>`.
 
 		> ***NOTE:*** As [described before](#a-one-based-index), this appears 1-based, but is not.
+
+	- `branchID`: *(string)* ID of the `<<treebranch>>` the leaf is from.
 
 ---
 
@@ -328,6 +332,8 @@ Registers a handler for the `<NTree instance>`.
 
 > ***NOTE:*** Registering multiple handlers for the same ID will only cause the newer ones to overwrite the older ones. There can only be one handler per ID.
 
+> ***NOTE:*** Handlers run in the order they are registered.
+
 - `id`: *(string | string array)* The ID of the handler unique to this `<NTree instance>`. An array is used to define multiple handlers with the same definition.
 
 - `handlerConfig`: *(object)* The properties of the handler:
@@ -361,6 +367,8 @@ myTree.registerHandler("speaker", {
 Registers a default handler for the `<NTree instance>`.
 
 > ***NOTE:*** Registering multiple default handlers will only cause the newer one to overwrite the older. Similar to how there can only be one handler per ID, there can only be one default handler.
+
+> ***NOTE:*** By default, the default handler is registered first, so runs first.
 
 - `onUpdate`: *(function)* Runs on each `<<leaf>>`, and the data passed to the handler is the contents of the leaf.
 

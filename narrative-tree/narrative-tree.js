@@ -156,54 +156,64 @@
 
 	Macro.add("treebranch", {
 		tags: ["leaf"],
-		//@ts-ignore. the typedefs are stoopid. skipArgs accepts array too! ><
 		skipArgs: ["leaf"],
 		handler: function handler() {
 			var _a, _b;
+			var _this = this;
 			try {
-				var treeID = this.args[0];
-				var branchID = this.args[1];
-				var repeat = (_a = this.args[2]) !== null && _a !== void 0 ? _a : NTreeBranchRepeatConfig.RepeatLast;
-				if (!(treeID === null || treeID === void 0 ? void 0 : treeID.trim())) throw new Error("@NTreeBranch: No NTree ID specified!");
-				if (!(branchID === null || branchID === void 0 ? void 0 : branchID.trim())) throw new Error("@NTreeBranch: No NTreeBranch ID specified");
-				var nTree = NTree.getNTree(treeID);
-				if (!nTree) throw new Error("@NTreeBranch: No NTree with specified ID \"".concat(treeID, "\" found!"));
-				var latest = (_b = nTree.state.log[branchID]) !== null && _b !== void 0 ? _b : 0;
-				var current = latest + 1;
-				if (current === this.payload.length) {
-					switch (repeat) {
-						case NTreeBranchRepeatConfig.Repeat:
-							{
-								current = 1;
-								break;
-							}
-						case NTreeBranchRepeatConfig.RepeatLast:
-							{
-								current = latest;
-								break;
-							}
-						case NTreeBranchRepeatConfig.NoRepeat:
-							{
-								return;
-							}
+				var _ret = function () {
+					var treeID = _this.args[0];
+					var branchID = _this.args[1];
+					var repeat = (_a = _this.args[2]) !== null && _a !== void 0 ? _a : NTreeBranchRepeatConfig.RepeatLast;
+					if (!(treeID === null || treeID === void 0 ? void 0 : treeID.trim())) throw new Error("@NTreeBranch: No NTree ID specified!");
+					if (!(branchID === null || branchID === void 0 ? void 0 : branchID.trim())) throw new Error("@NTreeBranch: No NTreeBranch ID specified");
+					var tree = NTree.getNTree(treeID);
+					if (!tree) throw new Error("@NTreeBranch: No NTree with specified ID \"".concat(treeID, "\" found!"));
+					var latest = (_b = tree.state.log[branchID]) !== null && _b !== void 0 ? _b : 0;
+					var current = latest + 1;
+					if (current === _this.payload.length) {
+						switch (repeat) {
+							case NTreeBranchRepeatConfig.Repeat:
+								{
+									current = 1;
+									break;
+								}
+							case NTreeBranchRepeatConfig.RepeatLast:
+								{
+									current = latest;
+									break;
+								}
+							case NTreeBranchRepeatConfig.NoRepeat:
+								{
+									return {
+										v: void 0
+									};
+								}
+						}
 					}
-				}
-				this.currentPayload = current;
-				var chunk = this.payload[current];
-				var args = chunk.args.full.trim() || "{}";
-				var delta = _defineProperty({}, NTree.defaultHandlerID, chunk.contents);
-				try {
-					var parsedDelta = Scripting.evalJavaScript("(".concat(args, ")"));
-					Object.keys(parsedDelta).forEach(function (key) {
-						delta[key] = parsedDelta[key];
-					});
-				} catch (ex) {
-					throw new Error("@NTreeLeaf/#".concat(current - 1, ": Malformed argument object:\n").concat(args, ": ").concat(ex));
-				}
-				nTree.update(delta, this);
-				nTree.state.log[branchID] = current;
+					_this.currentPayload = current;
+					_this.branchID = branchID;
+					var delta = _defineProperty({}, NTree.defaultHandlerID, _this.payload[current].contents);
+					for (var i = 1; i <= current; i++) {
+						var chunk = _this.payload[i];
+						var args = chunk.args.full.trim() || "{}";
+						try {
+							(function () {
+								var parsedDelta = Scripting.evalJavaScript("(".concat(args, ")"));
+								Object.keys(parsedDelta).forEach(function (key) {
+									delta[key] = parsedDelta[key];
+								});
+							})();
+						} catch (ex) {
+							throw new Error("@NTreeLeaf/#".concat(i - 1, ": Malformed argument object:\n").concat(args, ": ").concat(ex));
+						}
+					}
+					tree.update(delta, _this);
+					tree.state.log[branchID] = current;
+				}();
+				if (_typeof(_ret) === "object") return _ret.v;
 			} catch (ex) {
-				this.error("bad evaluation: " + (_typeof(ex) === "object" ? ex.message : ex));
+				_this.error("bad evaluation: " + (_typeof(ex) === "object" ? ex.message : ex));
 			}
 		}
 	});
