@@ -91,6 +91,14 @@ Handlers make up one of the most important parts of an `NTree`. They decide how 
 
 ---
 
+<i id="a-handler-delta"></i>
+
+### `HandlerDelta`
+
+Key-value pairs of handler IDs and values to update each handler (run the `onUpdate`) with. If a value is `NTree.clear`, the `onClear` runs instead.
+
+---
+
 <i id="a-handler-fn-onupdate"></i>
 
 ### Handler function: `onUpdate(...argumentsFromLeaf [, macroContext])`
@@ -162,6 +170,8 @@ The State of an NTree is an object with the following properties:
 - `id`: The unique ID of its parent `NTree`.
 
 - `log`: Key-value pairs of branch IDs and last visited leaf positions.
+
+- `delta`: The latest [HandlerDelta](#a-handler-delta) that is known to the tree.
 
 **Example:**
 
@@ -394,7 +404,7 @@ Loops through registered handlers and runs their `onUpdate` and `onClear` accord
 
 - `delta`: *(object)* Key-value pairs of handler IDs and values to update each handler (run the `onUpdate`) with. If a value is `NTree.clear`, the `onClear` runs instead.
 
-- `macroContext`: *(optional)* *MacroContext* of the macro its called from a macro. Usually, the `<<treebranch>>` macro.
+- `macroContext`: *(optional)* *MacroContext* of the macro if its called from a macro. Usually, the `<<treebranch>>` macro.
 
 **Returns:** A reference to the `<NTree instance>` for chaining.
 
