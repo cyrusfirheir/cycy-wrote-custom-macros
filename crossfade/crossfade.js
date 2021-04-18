@@ -1,13 +1,7 @@
-;(function () {
+; (function () {
 	"use-strict";
 	var crossfade = {};
 
-	/**
-	 * Creates container element for crossfading between two images.
-	 * @param {string} id UID for the crossfade container element.
-	 * @param {string} image Path to first populated image.
-	 * @returns {HTMLElement} The container HTMLElement.
-	 */
 	function crossfadeContainer(id) {
 		var image = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 		if (!id) throw new Error("No ID specified!");
@@ -18,30 +12,24 @@
 	}
 	crossfade.container = crossfadeContainer;
 
-	/**
-	 * Creates a selector string from a crossfade container ID.
-	 * @param {string} id UID to make selector out of.
-	 * @returns {string} Selector string.
-	 */
 	function crossfadeSelector(id) {
 		return '.macro-crossfade[data-macro-crossfade-id="' + id + '"]';
 	}
 	crossfade.selector = crossfadeSelector;
 
-	/**
-	 * Fades in a new image on top of existing one. Needs target element to already have two image elements.
-	 * @param {string|HTMLElement} element Selector string or HTMLElement of the crossfade container.
-	 * @param {string} img Path to the image to fade to.
-	 * @param {number} duration Duration of fade, in milliseconds
-	 */
 	function fade(element, img) {
 		var duration = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 400;
 		if (!element) throw new Error("No element specified!");
-		if (!$(element).length) throw new Error(_typeof(element) === "string" ? 'No elements matched selector "' + selector + '"!' : 'Specified element not found!');
-		var images = $(element).children("img");
+		var $el = $(element);
+		if (!$el.length) throw new Error(_typeof(element) === "string" ? 'No elements matched selector "' + selector + '"!' : 'Specified element not found!');
+		if (!$el.hasClass("macro-crossfade")) $el.addClass("macro-crossfade");
+		if ($el.children("img").length === 0) $("<img /><img />").addClass("macro-crossfade-image").appendTo($el);
+		var images = $el.children("img");
 		var backBefore = images.eq(0);
+		var frontBefore = images.eq(1);
 		img = img || null;
-		backBefore.attr("src", img).fadeOut(0).appendTo(images.parent()).fadeIn(img ? duration : 0, function () {
+		if (Number(frontBefore.css("opacity")) < 1) frontBefore.stop(true, true);
+		backBefore.attr("src", img).stop().fadeOut(0).appendTo(images.parent()).fadeIn(img ? duration : 0, function () {
 			var backAfter = images.eq(1);
 			if (img) {
 				backAfter.attr("src", img);
