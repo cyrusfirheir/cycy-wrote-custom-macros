@@ -6,6 +6,10 @@
 	width: 100%;
 }
 
+.macro-crossfade > .macro-crossfade-image:not([src]) {
+	visibility: hidden;
+}
+
 .macro-crossfade > .macro-crossfade-image:last-of-type {
 	position: absolute;
 	top: 0; left: 0;
