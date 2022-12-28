@@ -66,7 +66,7 @@
 		var t8n = noT8n ? "" : item.transition ? "macro-ctp-entry-t8n" : "";
 		var br = item.index === 0 || item.index === "head" || item.clear ? " " : item.nobr ? " " : '<br class="macro-ctp-entry-index-' + item.index + '">';
 		var brAfter = item.index === "head" && !item.nobr ? "<br>" : " ";
-		return br + '<span class="macro-ctp-visible macro-ctp-entry macro-ctp-entry-index-' + item.index + ' ' + t8n + '">' + item.content + '</span>' + brAfter;
+		return br + '<span class="macro-ctp-visible macro-ctp-entry macro-ctp-entry-index-' + item.index + ' ' + t8n + '">' + item.content + '\n</span>' + brAfter;
 	};
 
 	CTP.prototype.entry = function (index) {
