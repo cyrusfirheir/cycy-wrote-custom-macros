@@ -42,7 +42,8 @@
 					"data-macro-ctp-id": this.id,
 					"data-macro-ctp-index": index,
 				})
-				.on("update.macro-ctp", (_, firstTime) => {
+				.on("update.macro-ctp", (ev, firstTime) => {
+					ev.stopPropagation();
 					if (index === this.log.index) {
 						if (firstTime) {
 							if (typeof content === "string") element.wiki(content);
