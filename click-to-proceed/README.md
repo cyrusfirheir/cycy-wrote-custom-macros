@@ -295,8 +295,31 @@ It comes with the following extra data:
 **Example:**
 
 ```js
-$(document).on("update.macro-ctp", (_, type, id, index) => {
+$(document).on("update.macro-ctp", (event, type, id, index) => {
 	// do something
+});
+```
+
+---
+
+### `update-internal.macro-ctp` Event
+
+Whenever the advance or back functions (or macros) are called, the `update-internal.macro-ctp` synthetic event is triggered on all of the CTP blocks with the target ID.  
+
+It comes with the following extra data:  
+- `firstTime`: *(boolean)* Whether this is the first time the content is being rendered into the block element.  
+- `type`: *("advance" | "back")* String which specifies whether the update is result of an advance or a back operation.  
+- `id`: *(string)* ID of the CTP object on which the update is called.  
+- `index`: *(number)* Index of the current block of the CTP object.
+
+**Example:**
+
+```js
+$(document).on("update-internal.macro-ctp", (event, firstTime type, id, index) => {
+	if (id === "ctpTest" && $(event.target).data("macro-ctp-index") === index) {
+		console.log(event.target); // the current ctp block element
+		// do something
+	}
 });
 ```
 

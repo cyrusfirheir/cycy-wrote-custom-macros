@@ -42,8 +42,7 @@
 					"data-macro-ctp-id": this.id,
 					"data-macro-ctp-index": index,
 				})
-				.on("update.macro-ctp", (ev, firstTime) => {
-					ev.stopPropagation();
+				.on("update-internal.macro-ctp", (_, firstTime) => {
 					if (index === this.log.index) {
 						if (firstTime) {
 							if (typeof content === "string") element.wiki(content);
@@ -73,7 +72,7 @@
 				this.log.seen = Math.max(this.log.seen, this.log.index);
 				this.log.lastClear = this.clears.slice().reverse().find(el => el <= this.log.index) ?? -1;
 				$(document).trigger("update.macro-ctp", ["advance", this.id, this.log.index]);
-				$(`[data-macro-ctp-id="${this.id}"]`).trigger("update.macro-ctp", [firstTime]);
+				$(`[data-macro-ctp-id="${this.id}"]`).trigger("update-internal.macro-ctp", [firstTime, "advance", this.id, this.log.index]);
 			}
 			return this;
 		}
@@ -82,7 +81,7 @@
 				this.log.index--;
 				this.log.lastClear = this.clears.slice().reverse().find(el => el <= this.log.index) ?? -1;
 				$(document).trigger("update.macro-ctp", ["back", this.id, this.log.index]);
-				$(`[data-macro-ctp-id="${this.id}"]`).trigger("update.macro-ctp", [false]);
+				$(`[data-macro-ctp-id="${this.id}"]`).trigger("update-internal.macro-ctp", [false, "back", this.id, this.log.index]);
 			}
 			return this;
 		}
