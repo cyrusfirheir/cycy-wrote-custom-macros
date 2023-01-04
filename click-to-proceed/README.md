@@ -1,4 +1,10 @@
-# Click to Proceed (CTP)
+# Click to Proceed (CTP) v2
+
+**NOTE:** Version 2 is not entirely backwards compatible with version 1! See [what's changed](#changelog).
+
+_Version 1 of this library can be found [here](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/56872f8fb0548e751224338d5d3b642c5e84a476/click-to-proceed)._
+
+---
 
 ## Overview
 
@@ -20,27 +26,25 @@ If using a compiler like Tweego, drop `click-to-proceed.js` and `click-to-procee
 
 ## Example Usage
 
-See [more examples](#examples).
-
 ```html
 <<ctp "testID">>
-  This is the first string.
+	This is the first string.
 <<ctpNext clear>>
-  Second! It cleared the first one out!
-<<ctpNext nobr>>
-  Third, but with nobr...
-<<ctpNext 2s>>
-  The fourth shows up 2 seconds late.
+	Second! It cleared the first one out!
+<<ctpNext>>
+	Third...
+<<ctpNext>>
+	The fourth!
 <<ctpNext t8n>>
-  And the final one. With a transition!
+	And the final one. With a transition!
 <</ctp>>
 
 <<link "Next">>
-  <<ctpAdvance "testID">>
+	<<ctpAdvance "testID">>
 <</link>>
 
 <<link "Back">>
-  <<ctpBack "testID">>
+	<<ctpBack "testID">>
 <</link>>
 ```
 
@@ -48,26 +52,18 @@ See [more examples](#examples).
 
 ## Macros
 
-#### Keywords
+### Keywords
 
 Keywords for controlling behavior:  
-- `clear`: Clears the content of the previous block. Use for replacing.
-- `nobr`: Appends content to the same line as the last block instead of going to a new line.
+- `clear`: Clears the content up until this block. Use for replacing.
 - `t8n` or `transition`: Custom CSS animation based transition (400ms fade-in by default).
-- (delay): A valid CSS time value (e.g. `3s` or `250ms`) to delay the display of the block by.
-
-Additional keywords for individual blocks (`<<ctpNext>>`, `<<ctpHead>>`, `<<ctpTail>>`) in a chain (these are used to break out of behavior set by the `<<ctp>>` macro):
-- `noClear`: Overrides `clear` and keeps previous blocks in place instead of replacing.
-- `br`: Overrides `nobr` and adds a line break before the current block.
-- `noT8n` or `noTransition`: Overrides `t8n` or `transition` and removes the transition for the current block.
-- (delay): Overrides the delay set by `<<ctp>>` for the current block.
-- `redo`: When going back up the chain, re-render this block.
+- `element:name`: Name of element to wrap the block in, (`<span>` by default). e.g. `element:div`, `element:p`, etc.
 
 ---
 
 ### `<<ctp "id" [keywords]>>`
 
-- `id`: *(string)* Unique ID to be used to identify the chain of content. The naming rule follows the same as those of SugarCube variable names (learn more [here](https://www.motoslave.net/sugarcube/2/docs/#twinescript-variables)).
+- `id`: *(string)* Unique ID to be used to identify the chain of content.
 
 - `keywords`: *(optional|string)* Keywords (full list [here](#keywords)) can be used to alter the behavior of the macro throughout the entire chain. Keywords on `<<ctp>>` apply to all blocks.
 
@@ -75,7 +71,7 @@ Additional keywords for individual blocks (`<<ctpNext>>`, `<<ctpHead>>`, `<<ctpT
 
 ```html
 <<ctp "ID_of_the_year">>
-  Bare minimum...
+	Bare minimum...
 <</ctp>>
 ```
 
@@ -91,65 +87,15 @@ To be used inside `<<ctp>>` to separate the content into blocks.
 
 ```html
 <<ctp "fancyCTP">>
-  One.
+	One.
 <<ctpNext clear>>
-  Two with clear.
-<<ctpNext nobr>>
-  Three on the same line.
-<<ctpNext 500ms>>
-  Delayed four.
+	Two with clear.
+<<ctpNext>>
+	Three.
+<<ctpNext element:p>>
+	Four but it's in a paragraph tag.
 <<ctpNext t8n>>
-  Fading five.
-<</ctp>>
-```
-
----
-
-### `<<ctpHead [keywords]>>`
-
-To be used inside `<<ctp>>` as a block *prepended* to the chain which is re-evaluated at every `<<ctpAdvance>>` and `<<ctpBack>>`. As long as it is inside `<<ctp>>`, the position does not matter.
-
-The main body of the CTP chain is always rendered first, before `<<ctpHead>>` or `<<ctpTail>>`.
-
-- `keywords`: *(optional|string)* Keywords (full list [here](#keywords)) can be used to alter the behavior of the macro for the current block.
-
-**Example:**
-
-```html
-<<ctp "fancyCTP">>
-  <<set _ctp to CTP.getCTP("fancyCTP")>>
-  This is the first block. Declare any variables to be used by ctpHead in here.
-<<ctpHead>>
-  <<if _ctp.log.index is 1>>
-	<!-- do stuff if this is the second block -->
-  <</if>>
-<<ctpNext>>
-  This is the second!
-<</ctp>>
-```
-
----
-
-### `<<ctpTail [keywords]>>`
-
-To be used inside `<<ctp>>` as a block *appended* to the chain which is re-evaluated at every `<<ctpAdvance>>` and `<<ctpBack>>`. As long as it is inside `<<ctp>>`, the position does not matter.
-
-The main body of the CTP chain is always rendered first, before `<<ctpHead>>` or `<<ctpTail>>`.
-
-- `keywords`: *(optional|string)* Keywords (full list [here](#keywords)) can be used to alter the behavior of the macro for the current block.
-
-**Example:**
-
-```html
-<<ctp "fancyCTP">>
-  <<set _ctp to CTP.getCTP("fancyCTP")>>
-  This is the first block. Declare any variables to be used by ctpHead in here.
-<<ctpNext>>
-  This is the second!
-<<ctpTail>>
-  <<if _ctp.log.index is 1>>
-	<!-- do stuff if this is the second block -->
-  <</if>>
+	Fading five.
 <</ctp>>
 ```
 
@@ -167,11 +113,11 @@ The 'proceed' part of Click To Proceed... Used to move the train forward and sho
 
 ```html
 <<ctp "ID_of_the_year_once_again">>
-  <!-- stuff -->
+	<!-- stuff -->
 <</ctp>>
 
 <<link "Next">>
-  <<ctpAdvance "ID_of_the_year_once_again">>
+	<<ctpAdvance "ID_of_the_year_once_again">>
 <</link>>
 ```
 
@@ -189,24 +135,58 @@ Turns back time and goes back one block.
 
 ```html
 <<ctp "ID_of_the_year_yet_again">>
-  <!-- stuff -->
+	<!-- stuff -->
 <</ctp>>
 
 <<link "Back">>
-  <<ctpBack "ID_of_the_year_yet_again">>
+	<<ctpBack "ID_of_the_year_yet_again">>
 <</link>>
 ```
 
 ---
 
-## JavaScript usage - Functions
+## JavaScript usage
 
-### `CTP.getCTP(id [, clone])`
+### The CTP Class
+
+```ts
+class CTP {
+	id: string; // Unique ID
+	stack: CTPContent[]; // Array of CTPContent objects
+	options: CTPContent["options"]; // CTPContent Options object
+	log: {
+		index: number; // Zero-based index of current block
+	};
+}
+```
+
+**Example:**
+
+```js
+const ctpTest = new CTP("ctpTest");
+```
+
+### The content object
+
+Each entry in the stack of content is stored in an object structured as follows:
+
+```ts
+interface CTPContent {
+	index: number; // Zero-based index of current block
+	options: {
+		clear?: boolean; // Clear up till current block?
+		transition?: boolean; // Add transition to current block?
+		element?: string; // Element to render content into
+	};
+	content: string | JQuery.TypeOrArray<JQuery.Node | JQuery<JQuery.Node>>; // content to be put out to the DOM. String or JQuery or HTMLElement
+}
+```
+
+### `CTP.getCTP(id)`
 
 Returns a `CTP` object created with the `<<ctp>>` macro.
 
 - `id`: *(string)* ID of the `CTP` object.
-- `clone`: *(optional|boolean)* Whether to return a deep clone. False by default, making the function return a reference to the original object.
 
 **Example:**
 
@@ -216,68 +196,28 @@ CTP.getCTP("testID");
 
 ---
 
-## JavaScript usage - The `CTP` object
+### `<CTP>.add(content [, options])`
 
-***The `CTP` custom object is set up as follows:***
+Adds content to the end of the stack. Returns the `CTP` object for chaining.
 
-`id`: *(string)* Unique ID.  
-`selector`: *(string)* CSS selector to target to output to. When used by the macro, this is the slugified form of `id`.  
-`stack`: *(array)* An array of [content](#the-content-object) objects.  
-`head` and `tail`: *(object)* Contain the `<<ctpHead>>` and `<<ctpTail>>` respectively. Structured as [content](#the-content-object) objects.  
-`log`: *(object)* Keeps track of blocks and their behaviors:  
-- `index`: *(whole number)* Current index of block (zero-based).  
-- `delayed`: *(boolean)* Whether the current block is delayed or not.
-
-**Example:**
-
-```js
-var ctpTest = new CTP({
-  id: "ctpTest",
-  selector: "#ctp-test-id"
-});
-```
-
-#### The content object
-
-Each entry in the stack of content (plus the `head` and `tail`) is stored in an object structured as follows:
-
-```js
-var content = {
-  index: 0, // whole number [string for "head" and "tail"]
-  clear: false, // boolean
-  nobr: false, // boolean
-  transition: false, // boolean
-  delay: 0, // time in milliseconds
-  content: "Actual content to be put out to DOM" // string
-}
-```
-
----
-
-***Object methods:***
-
-### `<CTP Object>.add(content [, keywords])`
-
-Adds content to the end of the stack and returns the `CTP` object for chaining.
-
-- `content`: *(string)* The actual content in the block.
-- `keywords`: *(optional|string)* Space-separated list of keywords (clear, nobr, t8n, transition) to modify the behavior of the blocks.
+- `content`: *(string | JQuery | HTMLElement)* The actual content in the block.
+- `options`: *(optional|content options object)* Options for the block. See: [the content object](#the-content-object).
 
 **Example:**
 
 ```js
 ctpTest
-  .add("This is the first string.")
-  .add("Second! It cleared the first one out!", "clear")
-  .add("Third, but with nobr...", "nobr")
-  .add("And the final one. With a transition!", "t8n");
+	.add("This is the first string.")
+	.add("Second! It cleared the first one out!", { clear: true })
+	.add("Third...")
+	.add("And the final one. With a transition!", { transition: true });
 ```
 
 ---
 
 ### `<CTP Object>.advance()`
 
-Does the same as `<<ctpAdvance>>`, moving to the next block. Returns a promise if advanced successfully, `undefined` otherwise.
+Does the same as `<<ctpAdvance>>`, moving to the next block. Returns the `CTP` object for chaining.
 
 **Example:**
 
@@ -299,166 +239,77 @@ ctpTest.back();
 
 ---
 
-### `<CTP Object>.go(diff)`
+### `<CTP Object>.output()`
 
-Jumps to a specific block ***by*** the specified number of blocks.
+Returns the document fragment which includes output for the CTP.
 
-- `diff`: *(integer)* How many blocks to move by. Positive integers signify forward movement (like `advance()`) and negative integers signify backward movement (like `back()`).
-
-**Example:**
-
-```js
-// advance() twice
-ctpTest.go(2);
-
-// go back() twice
-ctpText.go(-2);
-```
-
----
-
-### `<CTP Object>.goTo(index)`
-
-Jumps to a specific block ***to*** the specified index of block.
-
-- `index`: *(whole number)* Index of the CTP chain to jump to.
+**NOTE:** This does NOT perform the very first advance needed to show the first block like the `<<ctp>>` macro does automatically.
 
 **Example:**
 
 ```js
-// go to the 5th block
-ctpTest.goTo(4);
+$(someElement).append(ctpTest.out());
 ```
 
 ---
-
-### `<CTP Object>.entry(index [, noT8n])`
-
-Returns the HTML output for a single block at the index passed into it.
-
-- `index`: *(whole number)* Index of block to return.
-- `noT8n`: *(optional|boolean)* If true, all transitions are removed. False by default.
-
-**Example:**
-
-```js
-ctpTest.entry(2);
-
-// Assuming ctpTest is the same as in the previous examples, this returns:
-// <span class="macro-ctp-entry macro-ctp-entry-index-2">Third, but with nobr...</span>
-```
-
----
-
-### `<CTP Object>.out()`
-
-Returns the HTML string output for setting up the chain with the structure and the first block.
-
-**NOTE:** This does NOT return the contents of the `head` and `tail`. That needs to be done manually (see second example.)
-
-**Example:**
-
-```js
-ctpTest.out();
-
-/* Returns:
- *
- * <span class="macro-ctp-wrapper">
- *  <span class="ctp-head"></span>
- *  <span class="ctp-body">
- *    <span class="macro-ctp-entry macro-ctp-entry-index-0">
- *      Content
- *    </span>
- *  </span>
- *  <span class="ctp-tail"></span>
- * </span>
- */
-```
-
-```js
-$("#test-ctp-element")
-	.wiki(ctpTest.out())
-	.find(".macro-ctp-wrapper .ctp-head").wiki(CTP.item(ctpTest.head))
-	.siblings(".ctp-tail").wiki(CTP.item(ctpTest.tail));
-
-/* Returns:
- *
- * <span class="macro-ctp-wrapper">
- *  <span class="ctp-head">
- * 		Head content
- * </span>
- *  <span class="ctp-body">
- *    <span class="macro-ctp-entry macro-ctp-entry-index-0">
- *      Content
- *    </span>
- *  </span>
- *  <span class="ctp-tail">
- * 		Tail content
- * 	</span>
- * </span>
- */
-```
-
----
-
 
 ***Complete usage:***
 
 JavaScript:
 ```js
-State.variables.ctpTest = new CTP({
-  id: "ctpTest",
-  selector: "#ctp-test-id"
-});
+setup.ctpTest = new CTP("ctpTest");
 
-State.variables.ctpTest
-  .add("This is the first string.")
-  .add("Second! It cleared the first one out!", "clear")
-  .add("Third, but with nobr...", "nobr")
-  .add("And the final one. With a transition!", "t8n");
+setup.ctpTest
+	.add("This is the first string.")
+	.add("Second! It cleared the first one out!", { clear: true })
+	.add("Third...")
+	.add("And the final one. With a transition!", { transition: true });
 ```
 
 In Passage:
 ```html
 <div id="#ctp-test-id">
-  <<= $ctpTest.out()>>
+	<<script>>
+		$(output).append(setup.ctpTest.out());
+	<</script>>
 </div>
 
 <<link "Advance">>
-  <<run $ctpTest.advance()>>
-  <!-- Because $ctpTest was created manually, using the <<ctpAdvance>> macro won't work. To be able to use <<ctpAdvance>>, the CTP object needs to be set as a property of State.variables["#macro-ctp-dump"] as that is what is used internally to store CTP objects created via the macros. -->
+	<<run setup.ctpTest.advance()>>
+	<!-- OR -->
+	<<ctpAdvance "ctpTest">>
 <</link>>
 ```
 
 ---
 
-## Examples
+### `update.macro-ctp` Event
 
-### A chain where the `Back` and `Next` buttons hide themselves when they're not needed.
+Whenever the advance or back functions (or macros) are called, the `update.macro-ctp` synthetic event is triggered on `document`.  
 
-```html
-<<ctp "testID">>
-  <<set _ctp to CTP.getCTP("testID")>>
-  This is the first string.
-<<ctpHead>>
-  <<if _ctp.log.index gt 0>>
-	<<button "Back">>
-	  <<ctpBack "testID">>
-	<</button>>
-  <</if>>
-<<ctpNext clear>>
-  Second! It cleared the first one out!
-<<ctpNext nobr>>
-  Third, but with nobr..
-<<ctpNext 500ms>>
-  The fourth shows up half a second late.
-<<ctpNext t8n>>
-  And the final one. With a transition!
-<<ctpTail>>
-  <<if _ctp.log.index lt _ctp.stack.length - 1>>
-	<<button "Next">>
-	  <<ctpAdvance "testID">>
-	<</button>>
-  <</if>>
-<</ctp>>
+It comes with the following extra data:  
+- `type`: *("advance" | "back")* String which specifies whether the update is result of an advance or a back operation.  
+- `id`: *(string)* ID of the CTP object on which the update is called.  
+- `index`: *(number)* Index of the current block of the CTP object.
+
+**Example:**
+
+```js
+$(document).on("update.macro-ctp", (_, type, id, index) => {
+	// do something
+});
 ```
+
+---
+
+## Changelog
+
+### Changes since v1:
+
+_Link to v1 [here](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/56872f8fb0548e751224338d5d3b642c5e84a476/click-to-proceed)._
+
+- **Cleaner output**: No unnecessary classes and wrappers. Now it uses just one wrapping element per block of content, and blocks are put out to the DOM as is, not wrapped by another element containing all of them.  
+- **Uses events**: Synthetic events make handling everything easier. And now allow the author to hook into them as needed.  
+- **Simpler code**: Source code is cleaner, easier to modify. Dropped support for Internet Explorer, so the source is in modern JS.  
+- **Lighter libray**: Functions (`go`, `goTo`), macros (`ctpHead`, `ctpTail`), and keywords (`nobr`, `redo`) were cut down. Some of them do not need to be in the base library and contribute towards bloat. The others, can be achieved by using other libraries alongside this. And if required, author can easily extend.  
+- **Lighter State**: CTPs are now stored in a single repository in the `setup` object (vs `State.variables` in v1). This repository does not need to persist across sessions, and does not need to be serialized into saves, so management is kept to a minimum.  

@@ -25,8 +25,6 @@ sugarcube-2:
       container: true
       children:
         - ctpNext
-        - ctpHead
-        - ctpTail
       description: |-
         The main CTP macro inside which all content is written.
 
@@ -37,6 +35,8 @@ sugarcube-2:
         <</ctp>>
         ```
         READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctp-id-keywords)
+      parameters:
+        - text &+ ...text
     ctpNext:
       name: ctpNext
       parents:
@@ -49,30 +49,8 @@ sugarcube-2:
         <<ctpNext [keywords]>>
         ```
         READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctpnext-keywords)
-    ctpHead:
-      name: ctpHead
-      parents:
-        - ctp
-      description: |-
-        To be used inside `<<ctp>>` as a block *prepended* to the chain which is re-evaluated at every `<<ctpAdvance>>` and `<<ctpBack>>`. As long as it is inside `<<ctp>>`, the position does not matter.
-        
-        Usage:
-        ```
-        <<ctpHead [keywords]>>
-        ```
-        READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctphead-keywords)
-    ctpTail:
-      name: ctpTail
-      parents:
-        - ctp
-      description: |-
-        To be used inside `<<ctp>>` as a block *appended* to the chain which is re-evaluated at every `<<ctpAdvance>>` and `<<ctpBack>>`. As long as it is inside `<<ctp>>`, the position does not matter.
-        
-        Usage:
-        ```
-        <<ctpTail [keywords]>>
-        ```
-        READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctptail-keywords)
+      parameters:
+        - ...text
     ctpAdvance:
       name: ctpAdvance
       description: |-
@@ -83,6 +61,8 @@ sugarcube-2:
         <<ctpAdvance id>>
         ```
         READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctpadvance-id)
+      parameters:
+        - text
     ctpBack:
       name: ctpBack
       description: |-
@@ -93,6 +73,8 @@ sugarcube-2:
         <<ctpBack id>>
         ```
         READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctpback-id)
+      parameters:
+        - text
     
     # crossfade.js
     crossfadecontainer:

@@ -12,16 +12,12 @@ Besides that, there's a `cycy.twee-config.yaml` in the root of the repo, and tha
 
 ---
 
-> ***NOTE:***  
-> If you've used previous versions of the stuff from GitHub Gists, I'd recommend going through the README files again. There are some changes incompatible with those earlier versions.
-
----
-
 ## Macro sets
 
-1. [Click to Proceed (CTP)](./click-to-proceed)  
+1. [Click to Proceed (CTP) v2](./click-to-proceed)  
     - Clean way to reveal text block-by-block in the same passage without having to nest a million `<<linkreplace>>` macros.  
-    - Primarily made for VN like interfaces.
+    - Primarily made for sequential rendering, e.g. VN like interfaces.  
+	> ***NOTE:*** CTP v1 can be found [here](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/56872f8fb0548e751224338d5d3b642c5e84a476/click-to-proceed).
 
 2. [Crossfade](./crossfade)  
     - Crossfade between two images with simple macros.

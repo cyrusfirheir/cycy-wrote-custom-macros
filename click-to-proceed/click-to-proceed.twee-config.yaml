@@ -5,8 +5,6 @@ sugarcube-2:
       container: true
       children:
         - ctpNext
-        - ctpHead
-        - ctpTail
       description: |-
         The main CTP macro inside which all content is written.
 
@@ -31,34 +29,6 @@ sugarcube-2:
         <<ctpNext [keywords]>>
         ```
         READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctpnext-keywords)
-      parameters:
-        - ...text
-    ctpHead:
-      name: ctpHead
-      parents:
-        - ctp
-      description: |-
-        To be used inside `<<ctp>>` as a block *prepended* to the chain which is re-evaluated at every `<<ctpAdvance>>` and `<<ctpBack>>`. As long as it is inside `<<ctp>>`, the position does not matter.
-        
-        Usage:
-        ```
-        <<ctpHead [keywords]>>
-        ```
-        READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctphead-keywords)
-      parameters:
-        - ...text
-    ctpTail:
-      name: ctpTail
-      parents:
-        - ctp
-      description: |-
-        To be used inside `<<ctp>>` as a block *appended* to the chain which is re-evaluated at every `<<ctpAdvance>>` and `<<ctpBack>>`. As long as it is inside `<<ctp>>`, the position does not matter.
-        
-        Usage:
-        ```
-        <<ctpTail [keywords]>>
-        ```
-        READ: [Documentation](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree/master/click-to-proceed#ctptail-keywords)
       parameters:
         - ...text
     ctpAdvance:
