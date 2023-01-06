@@ -330,7 +330,7 @@ $(document).on("update-internal.macro-ctp", (event, firstTime type, id, index) =
 ### Appends each new segment and scrolls to the bottom
 ```js
 setup.scrollToBottom = function() {
-    $("html").stop(true);
+    $("html").stop(true); // clears queue, if player rapidly presses continue button and executes last
     $("html").animate({
         scrollTop: $("html").prop('scrollHeight')
     }, 2000);
@@ -362,7 +362,7 @@ setup.scrollToBottom = function() {
 
 <<link 'Click to continue'>>
     <<ctpAdvance 'chatLog'>>
-    <<run setup.scrollToBottom()>>
+    <<run setup.scrollToBottom()>> /* if you need a widget or script to run every <<ctpNext>>, can tie to <<ctpAdvance>> instead */
 <</link>>
 ```
 
