@@ -325,6 +325,49 @@ $(document).on("update-internal.macro-ctp", (event, firstTime type, id, index) =
 
 ---
 
+## Examples
+
+### Appends each new segment and scrolls to the bottom
+```js
+setup.scrollToBottom = function() {
+    $("html").stop(true);
+    $("html").animate({
+        scrollTop: $("html").prop('scrollHeight')
+    }, 2000);
+}
+```
+
+```html
+:: DiscordPlug
+
+<<ctp 'chatLog'>>
+    Cyrus Firheir: Join discord.
+<<ctpNext>>
+    SleepyFool: Why?
+<<ctpNext>>
+    Cyrus Firheir: Peeple be nice there. Much knowledge, very helpful.
+<<ctpNext>>
+    SleepyFool: I'm not sure it's a good idea to advertise it here...
+<<ctpNext>>
+    Cyrus Firheir: ?
+<<ctpNext>>
+    SleepyFool: Cuz then we'll get people who will blindly shout 'code for me!' and expect answers without even trying to solve their own problems or looking at the docs.
+<<ctpNext>>
+    Cyrus Firheir: Nooo, they be reading if they see dis!
+<<ctpNext>>
+    SleepyFool: That's... a fair point. Well if nothing else, we have friends with big hammers.
+<<ctpNext>>
+    Cyrus Firheir: :3
+<</ctp>>
+
+<<link 'Click to continue'>>
+    <<ctpAdvance 'chatLog'>>
+    <<run setup.scrollToBottom()>>
+<</link>>
+```
+
+---
+
 ## Changelog
 
 ### Changes since v1:
