@@ -42,18 +42,20 @@
 					"data-macro-ctp-id": this.id,
 					"data-macro-ctp-index": index,
 				})
-				.on("update-internal.macro-ctp", (_, firstTime) => {
-					if (index === this.log.index) {
-						if (firstTime) {
-							if (typeof content === "string") element.wiki(content);
-							else element.append(content);
-							element.addClass(options.transition ? "--macro-ctp-t8n" : "");
+				.on("update-internal.macro-ctp", (event, firstTime) => {
+					if ($(event.target).is(element)) {
+						if (index === this.log.index) {
+							if (firstTime) {
+								if (typeof content === "string") element.wiki(content);
+								else element.append(content);
+								element.addClass(options.transition ? "--macro-ctp-t8n" : "");
+							}
+							element.removeClass("--macro-ctp-hidden");
 						}
-						element.removeClass("--macro-ctp-hidden");
-					}
-					else {
-						if (index < this.log.seen) element.removeClass("--macro-ctp-t8n");
-						element.toggleClass("--macro-ctp-hidden", index > this.log.index || index < this.log.lastClear);
+						else {
+							if (index < this.log.seen) element.removeClass("--macro-ctp-t8n");
+							element.toggleClass("--macro-ctp-hidden", index > this.log.index || index < this.log.lastClear);
+						}
 					}
 				});
 			return element;
