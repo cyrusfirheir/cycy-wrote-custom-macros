@@ -1,12 +1,13 @@
 (function () {
 	"use strict";
 
+	variables()["@CTP/Logs"] = new Map();
+
 	window.CTP = class CTP {
 		constructor(id) {
 			this.stack = [];
 			this.clears = [];
 			this.options = {};
-			this.log = { lastClear: -1, index: -1, seen: -1 };
 			if (!id?.trim()) throw new Error(`No ID specified!`);
 			this.id = id;
 			CTP.Repository.set(id, this);
@@ -15,6 +16,12 @@
 		static get Repository() {
 			if (!setup["@CTP/Repository"]) setup["@CTP/Repository"] = new Map();
 			return setup["@CTP/Repository"];
+		}
+		
+		get log() {
+			const logs = variables()["@CTP/Logs"];
+			if (!logs.get(this.id)) logs.set(this.id, { lastClear: -1, index: -1, seen: -1 });
+			return logs.get(this.id);
 		}
 
 		static getCTP(id) {
