@@ -248,7 +248,7 @@ Returns the document fragment which includes output for the CTP.
 **Example:**
 
 ```js
-$(someElement).append(ctpTest.out());
+$(someElement).append(ctpTest.output());
 ```
 
 ---
@@ -270,7 +270,7 @@ In Passage:
 ```html
 <div id="#ctp-test-id">
 	<<script>>
-		$(output).append(setup.ctpTest.out());
+		$(output).append(setup.ctpTest.output());
 	<</script>>
 </div>
 
