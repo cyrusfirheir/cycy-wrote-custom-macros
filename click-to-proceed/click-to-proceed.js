@@ -58,10 +58,13 @@
 								element.addClass(options.transition ? "--macro-ctp-t8n" : "");
 							}
 							element.removeClass("--macro-ctp-hidden");
+							element.addClass("--macro-ctp-visible");
 						}
 						else {
 							if (index < this.log.seen) element.removeClass("--macro-ctp-t8n");
-							element.toggleClass("--macro-ctp-hidden", index > this.log.index || index < this.log.lastClear);
+              const isHidden = index > this.log.index || index < this.log.lastClear;
+							element.toggleClass("--macro-ctp-hidden", isHidden);
+							element.toggleClass("--macro-ctp-visible", !isHidden);
 						}
 					}
 				});
