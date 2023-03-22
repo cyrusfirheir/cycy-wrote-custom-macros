@@ -19,7 +19,7 @@
 		}
 		
 		get log() {
-			const logs = variables()["@CTP/Logs"];
+			const logs = variables()["@CTP/Logs"] || new Map();
 			if (!logs.get(this.id)) logs.set(this.id, { lastClear: -1, index: -1, seen: -1 });
 			return logs.get(this.id);
 		}
