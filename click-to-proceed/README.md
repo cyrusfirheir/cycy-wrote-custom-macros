@@ -58,6 +58,7 @@ Keywords for controlling behavior:
 - `clear`: Clears the content up until this block. Use for replacing.
 - `t8n` or `transition`: Custom CSS animation based transition (400ms fade-in by default).
 - `element:name`: Name of element to wrap the block in, (`<span>` by default). e.g. `element:div`, `element:p`, etc.
+- `persist`: Makes this CTP persistent, i.e., the progress is remembered when you transition out of the passage and restored accordingly when you return to it.
 
 ---
 
@@ -149,6 +150,7 @@ Turns back time and goes back one block.
 
 ### The CTP Class
 
+Properties:
 ```ts
 class CTP {
 	id: string; // Unique ID
@@ -157,8 +159,18 @@ class CTP {
 	log: {
 		index: number; // Zero-based index of current block
 	};
+	persist: boolean; // Whether to remember progress of the CTP instance across passage transitions
 }
 ```
+
+Constructor
+
+### `new CTP(id, [persist])`
+
+Creates a new `CTP` instance.
+
+- `id`: *(string)* ID of the `CTP` object.
+- `persist`: *(boolean)* Whether to makes this `CTP` persistent, i.e., the progress is remembered when you transition out of the passage and restored accordingly when you return to it (`false` by default).
 
 **Example:**
 
@@ -378,4 +390,4 @@ _Link to v1 [here](https://github.com/cyrusfirheir/cycy-wrote-custom-macros/tree
 - **Uses events**: Synthetic events make handling everything easier. And now allow the author to hook into them as needed.  
 - **Simpler code**: Source code is cleaner, easier to modify. Dropped support for Internet Explorer, so the source is in modern JS.  
 - **Lighter libray**: Functions (`go`, `goTo`), macros (`ctpHead`, `ctpTail`), and keywords (`nobr`, `redo`) were cut down. Some of them do not need to be in the base library and contribute towards bloat. The others, can be achieved by using other libraries alongside this. And if required, author can easily extend.  
-- **Lighter State**: CTPs are now stored in a single repository in the `setup` object (vs `State.variables` in v1), and only the log is stored in story state (`State.variables`). This repository does not need to persist across sessions, and does not need to be serialized into saves, so management is kept to a minimum.  
+- **Lighter State**: CTPs are now stored in a single repository in the `setup` object (vs `State.variables` in v1), and only the log is stored in story state (`State.variables`) and also, only for persistent instances. This repository does not need to persist across sessions, and does not need to be serialized into saves, so management is kept to a minimum.  

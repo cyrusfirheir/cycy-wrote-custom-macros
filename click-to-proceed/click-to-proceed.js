@@ -1,15 +1,23 @@
 (function () {
 	"use strict";
 
-	variables()["@CTP/Logs"] = new Map();
+	$(document).on(":passageinit", () => {
+		CTP.Logs.forEach((_, id) => {
+			if (!CTP.Repository.get(id)?.persist) CTP.Logs.delete(id);
+		});
+		CTP.Repository.forEach(({ persist }, id) => {
+			if (!persist) CTP.Repository.delete(id);
+		});
+	});
 
-	window.CTP = class CTP {
-		constructor(id) {
+	wiindow.CTP = class CTP {
+		constructor(id, persist = false) {
 			this.stack = [];
 			this.clears = [];
 			this.options = {};
 			if (!id?.trim()) throw new Error(`No ID specified!`);
 			this.id = id;
+			this.persist = persist;
 			CTP.Repository.set(id, this);
 		}
 
@@ -17,11 +25,15 @@
 			if (!setup["@CTP/Repository"]) setup["@CTP/Repository"] = new Map();
 			return setup["@CTP/Repository"];
 		}
-		
+
+		static get Logs() {
+			if (!variables()["@CTP/Logs"]) variables()["@CTP/Logs"] = new Map();
+			return variables()["@CTP/Logs"];
+		}
+
 		get log() {
-			const logs = variables()["@CTP/Logs"] || new Map();
-			if (!logs.get(this.id)) logs.set(this.id, { lastClear: -1, index: -1, seen: -1 });
-			return logs.get(this.id);
+			if (!CTP.Logs.get(this.id)) CTP.Logs.set(this.id, { lastClear: -1, index: -1, seen: -1 });
+			return CTP.Logs.get(this.id);
 		}
 
 		static getCTP(id) {
@@ -46,27 +58,27 @@
 			const element = $(document.createElement(options.element || "span"))
 				.addClass("--macro-ctp-hidden")
 				.attr({
-					"data-macro-ctp-id": this.id,
-					"data-macro-ctp-index": index,
-				})
-				.on("update-internal.macro-ctp", (event, firstTime) => {
-					if ($(event.target).is(element)) {
-						if (index === this.log.index) {
-							if (firstTime) {
-								if (typeof content === "string") element.wiki(content);
-								else element.append(content);
-								element.addClass(options.transition ? "--macro-ctp-t8n" : "");
-							}
-							element.removeClass("--macro-ctp-hidden");
+				"data-macro-ctp-id": this.id,
+				"data-macro-ctp-index": index,
+			})
+			.on("update-internal.macro-ctp", (event, firstTime) => {
+				if ($(event.target).is(element)) {
+					if (index === this.log.index) {
+						if (firstTime) {
+							if (typeof content === "string") element.wiki(content);
+							else element.append(content);
+							element.addClass(options.transition ? "--macro-ctp-t8n" : "");
 						}
-						else {
-							if (index < this.log.seen) element.removeClass("--macro-ctp-t8n");
-							element.toggleClass("--macro-ctp-hidden", index > this.log.index || index < this.log.lastClear);
-						}
+						element.removeClass("--macro-ctp-hidden");
+					} else {
+						if (index < this.log.seen) element.removeClass("--macro-ctp-t8n");
+						element.toggleClass("--macro-ctp-hidden", index > this.log.index || index < this.log.lastClear);
 					}
-				});
+				}
+			});
 			return element;
 		}
+
 		output() {
 			const wrapper = document.createDocumentFragment();
 			for (let i = 0; i < this.stack.length; i++) {
@@ -74,6 +86,7 @@
 			}
 			return wrapper;
 		}
+
 		advance() {
 			if (this.log.index < this.stack.length - 1) {
 				this.log.index++;
@@ -85,6 +98,7 @@
 			}
 			return this;
 		}
+		
 		back() {
 			if (this.log.index > 0) {
 				this.log.index--;
@@ -100,7 +114,9 @@
 		tags: ["ctpNext"],
 		handler() {
 			const id = this.args[0];
-			const ctp = new CTP(id);
+			const persist = this.args.slice(1).includes("persist");
+			const ctp = new CTP(id, persist);
+			const _passage = passage();
 			this.payload.forEach(({ args, name, contents }) => {
 				const options = {
 					clear: args.includes("clear"),
@@ -112,7 +128,14 @@
 				ctp.add(contents, options);
 			});
 			$(this.output).append(ctp.output());
-			$(document).on(":passagedisplay", () => ctp.advance());
+			$(document).one(":passagedisplay", () => {
+				if (_passage === passage()) {
+					const i = Math.max(ctp.log.index, 0);
+					ctp.log.index = -1;
+					ctp.log.seen = -1;
+					while (ctp.log.index < i) ctp.advance();
+				}
+			});
 		}
 	});
 
