@@ -148,9 +148,8 @@ Turns back time and goes back one block.
 
 ## JavaScript usage
 
-### The CTP Class
+### The CTP Class properties
 
-Properties:
 ```ts
 class CTP {
 	id: string; // Unique ID
@@ -163,7 +162,7 @@ class CTP {
 }
 ```
 
-Constructor
+---
 
 ### `new CTP(id, [persist])`
 
@@ -177,6 +176,8 @@ Creates a new `CTP` instance.
 ```js
 const ctpTest = new CTP("ctpTest");
 ```
+
+---
 
 ### The content object
 
