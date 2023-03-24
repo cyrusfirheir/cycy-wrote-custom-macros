@@ -10,7 +10,7 @@
 		});
 	});
 
-	wiindow.CTP = class CTP {
+	window.CTP = class CTP {
 		constructor(id, persist = false) {
 			this.stack = [];
 			this.clears = [];
