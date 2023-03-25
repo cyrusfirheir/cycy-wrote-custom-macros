@@ -41,6 +41,10 @@
 		}
 
 		add(content, options = {}) {
+			options = {
+				...this.options,
+				...options
+			};
 			if (options.clear) this.clears.push(this.stack.length);
 			this.stack.push({
 				options, content,
