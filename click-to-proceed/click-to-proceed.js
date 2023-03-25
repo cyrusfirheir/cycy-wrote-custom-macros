@@ -58,24 +58,24 @@
 			const element = $(document.createElement(options.element || "span"))
 				.addClass("--macro-ctp-hidden")
 				.attr({
-				"data-macro-ctp-id": this.id,
-				"data-macro-ctp-index": index,
-			})
-			.on("update-internal.macro-ctp", (event, firstTime) => {
-				if ($(event.target).is(element)) {
-					if (index === this.log.index) {
-						if (firstTime) {
-							if (typeof content === "string") element.wiki(content);
-							else element.append(content);
-							element.addClass(options.transition ? "--macro-ctp-t8n" : "");
+					"data-macro-ctp-id": this.id,
+					"data-macro-ctp-index": index,
+				})
+				.on("update-internal.macro-ctp", (event, firstTime) => {
+					if ($(event.target).is(element)) {
+						if (index === this.log.index) {
+							if (firstTime) {
+								if (typeof content === "string") element.wiki(content);
+								else element.append(content);
+								element.addClass(options.transition ? "--macro-ctp-t8n" : "");
+							}
+							element.removeClass("--macro-ctp-hidden");
+						} else {
+							if (index < this.log.seen) element.removeClass("--macro-ctp-t8n");
+							element.toggleClass("--macro-ctp-hidden", index > this.log.index || index < this.log.lastClear);
 						}
-						element.removeClass("--macro-ctp-hidden");
-					} else {
-						if (index < this.log.seen) element.removeClass("--macro-ctp-t8n");
-						element.toggleClass("--macro-ctp-hidden", index > this.log.index || index < this.log.lastClear);
 					}
-				}
-			});
+				});
 			return element;
 		}
 
@@ -118,10 +118,9 @@
 			const ctp = new CTP(id, persist);
 			const _passage = passage();
 			this.payload.forEach(({ args, name, contents }) => {
-				const options = {
-					clear: args.includes("clear"),
-					transition: args.includesAny("t8n", "transition")
-				};
+				const options = {};
+				if (args.includes("clear")) options.clear = true;
+				if (args.includesAny("t8n", "transition")) options.transition = true;
 				const elementArg = (args.find((el) => el.startsWith("element:")) ?? "");
 				if (elementArg) options.element = elementArg.replace("element:", "");
 				if (name === "ctp") ctp.options = { ...options };
