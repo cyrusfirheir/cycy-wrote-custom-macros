@@ -10,7 +10,7 @@
 		});
 	});
 
-	wiindow.CTP = class CTP {
+	window.CTP = class CTP {
 		constructor(id, persist = false) {
 			this.stack = [];
 			this.clears = [];
@@ -44,7 +44,8 @@
 			if (options.clear) this.clears.push(this.stack.length);
 			this.stack.push({
 				options, content,
-				index: this.stack.length
+				index: this.stack.length,
+				element: $()
 			});
 			return this;
 		}
@@ -58,24 +59,24 @@
 			const element = $(document.createElement(options.element || "span"))
 				.addClass("--macro-ctp-hidden")
 				.attr({
-				"data-macro-ctp-id": this.id,
-				"data-macro-ctp-index": index,
-			})
-			.on("update-internal.macro-ctp", (event, firstTime) => {
-				if ($(event.target).is(element)) {
-					if (index === this.log.index) {
-						if (firstTime) {
-							if (typeof content === "string") element.wiki(content);
-							else element.append(content);
-							element.addClass(options.transition ? "--macro-ctp-t8n" : "");
+					"data-macro-ctp-id": this.id,
+					"data-macro-ctp-index": index,
+				})
+				.on("update-internal.macro-ctp", (event, firstTime) => {
+					if ($(event.target).is(element)) {
+						if (index === this.log.index) {
+							if (firstTime) {
+								if (typeof content === "string") element.wiki(content);
+								else element.append(content);
+								element.addClass(options.transition ? "--macro-ctp-t8n" : "");
+							}
+							element.removeClass("--macro-ctp-hidden");
+						} else {
+							if (index < this.log.seen) element.removeClass("--macro-ctp-t8n");
+							element.toggleClass("--macro-ctp-hidden", index > this.log.index || index < this.log.lastClear);
 						}
-						element.removeClass("--macro-ctp-hidden");
-					} else {
-						if (index < this.log.seen) element.removeClass("--macro-ctp-t8n");
-						element.toggleClass("--macro-ctp-hidden", index > this.log.index || index < this.log.lastClear);
 					}
-				}
-			});
+				});
 			return element;
 		}
 
@@ -94,17 +95,17 @@
 				this.log.seen = Math.max(this.log.seen, this.log.index);
 				this.log.lastClear = this.clears.slice().reverse().find(el => el <= this.log.index) ?? -1;
 				$(document).trigger("update.macro-ctp", ["advance", this.id, this.log.index]);
-				$(`[data-macro-ctp-id="${this.id}"]`).trigger("update-internal.macro-ctp", [firstTime, "advance", this.id, this.log.index]);
+				this.stack.forEach(({ element }) => element.trigger("update-internal.macro-ctp", [firstTime, "advance", this.id, this.log.index]));
 			}
 			return this;
 		}
-		
+
 		back() {
 			if (this.log.index > 0) {
 				this.log.index--;
 				this.log.lastClear = this.clears.slice().reverse().find(el => el <= this.log.index) ?? -1;
 				$(document).trigger("update.macro-ctp", ["back", this.id, this.log.index]);
-				$(`[data-macro-ctp-id="${this.id}"]`).trigger("update-internal.macro-ctp", [false, "back", this.id, this.log.index]);
+				this.stack.forEach(({ element }) => element.trigger("update-internal.macro-ctp", [false, "back", this.id, this.log.index]));
 			}
 			return this;
 		}
