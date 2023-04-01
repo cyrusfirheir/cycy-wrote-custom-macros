@@ -41,6 +41,10 @@
 		}
 
 		add(content, options = {}) {
+			options = {
+				...this.options,
+				...options
+			};
 			if (options.clear) this.clears.push(this.stack.length);
 			this.stack.push({
 				options, content,
@@ -119,10 +123,9 @@
 			const ctp = new CTP(id, persist);
 			const _passage = passage();
 			this.payload.forEach(({ args, name, contents }) => {
-				const options = {
-					clear: args.includes("clear"),
-					transition: args.includesAny("t8n", "transition")
-				};
+				const options = {};
+				if (args.includes("clear")) options.clear = true;
+				if (args.includesAny("t8n", "transition")) options.transition = true;
 				const elementArg = (args.find((el) => el.startsWith("element:")) ?? "");
 				if (elementArg) options.element = elementArg.replace("element:", "");
 				if (name === "ctp") ctp.options = { ...options };
