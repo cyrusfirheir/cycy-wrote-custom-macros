@@ -158,7 +158,7 @@ class CTP {
 	log: {
 		index: number; // Zero-based index of current block
 	};
-	persist: boolean; // Whether to remember progress of the CTP instance across passage transitions
+	persist: boolean; // Whether to remember progress of the CTP instance across passage transitions. `false` by default.
 }
 ```
 
@@ -187,9 +187,9 @@ Each entry in the stack of content is stored in an object structured as follows:
 interface CTPContent {
 	index: number; // Zero-based index of current block
 	options: {
-		clear?: boolean; // Clear up till current block?
-		transition?: boolean; // Add transition to current block?
-		element?: string; // Element to render content into
+		clear?: boolean; // Clear up till current block? `false` by default.
+		transition?: boolean; // Add transition to current block? `false` by default.
+		element?: string; // Name of HTML element to render content into. `span` by default.
 	};
 	content: string | JQuery.TypeOrArray<JQuery.Node | JQuery<JQuery.Node>>; // content to be put out to the DOM. String or JQuery or HTMLElement
 }
