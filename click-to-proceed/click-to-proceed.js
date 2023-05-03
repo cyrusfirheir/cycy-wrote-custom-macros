@@ -81,6 +81,7 @@
 						}
 					}
 				});
+			this.stack[index].element = element;
 			return element;
 		}
 
