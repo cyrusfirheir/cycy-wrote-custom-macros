@@ -1,4 +1,4 @@
-(function () {
+(() => {
 	"use strict";
 
 	$(document).on(":passageinit", () => {
@@ -10,7 +10,7 @@
 		});
 	});
 
-	window.CTP = class CTP {
+	var CTP = class _CTP {
 		constructor(id, persist = false) {
 			this.stack = [];
 			this.clears = [];
@@ -18,69 +18,57 @@
 			if (!id?.trim()) throw new Error(`No ID specified!`);
 			this.id = id;
 			this.persist = persist;
-			CTP.Repository.set(id, this);
+			_CTP.Repository.set(id, this);
 		}
-
 		static get Repository() {
 			if (!setup["@CTP/Repository"]) setup["@CTP/Repository"] = new Map();
 			return setup["@CTP/Repository"];
 		}
-
 		static get Logs() {
 			if (!variables()["@CTP/Logs"]) variables()["@CTP/Logs"] = new Map();
 			return variables()["@CTP/Logs"];
 		}
-
 		get log() {
-			if (!CTP.Logs.get(this.id)) CTP.Logs.set(this.id, { lastClear: -1, index: -1, seen: -1 });
-			return CTP.Logs.get(this.id);
+			if (!_CTP.Logs.get(this.id)) _CTP.Logs.set(this.id, { lastClear: -1, index: -1, seen: -1 });
+			return _CTP.Logs.get(this.id);
 		}
-
 		static getCTP(id) {
-			return CTP.Repository.get(id);
+			return _CTP.Repository.get(id);
 		}
-
 		add(content, options = {}) {
-			options = {
-				...this.options,
-				...options
-			};
 			if (options.clear) this.clears.push(this.stack.length);
 			this.stack.push({
-				options, content,
+				options,
+				content,
 				index: this.stack.length,
 				element: $()
 			});
 			return this;
 		}
-
 		print(index) {
 			const { content, options: iOpts } = this.stack[index];
 			const options = {
 				...this.options,
 				...iOpts
 			};
-			const element = $(document.createElement(options.element || "span"))
-				.addClass("--macro-ctp-hidden")
-				.attr({
-					"data-macro-ctp-id": this.id,
-					"data-macro-ctp-index": index,
-				})
-				.on("update-internal.macro-ctp", (event, firstTime) => {
-					if ($(event.target).is(element)) {
-						if (index === this.log.index) {
-							if (firstTime) {
-								if (typeof content === "string") element.wiki(content);
-								else element.append(content);
-								element.addClass(options.transition ? "--macro-ctp-t8n" : "");
-							}
-							element.removeClass("--macro-ctp-hidden");
-						} else {
-							if (index < this.log.seen) element.removeClass("--macro-ctp-t8n");
-							element.toggleClass("--macro-ctp-hidden", index > this.log.index || index < this.log.lastClear);
+			const element = $(document.createElement(options.element || "span")).addClass("--macro-ctp-hidden").attr({
+				"data-macro-ctp-id": this.id,
+				"data-macro-ctp-index": index
+			}).on("update-internal.macro-ctp", (event, firstTime) => {
+				if ($(event.target).is(element)) {
+					if (index === this.log.index) {
+						if (firstTime) {
+							if (typeof content === "string") element.wiki(content);
+							else element.append(content);
+							element.addClass(options.transition ? "--macro-ctp-t8n" : "");
 						}
+						element.removeClass("--macro-ctp-hidden");
+					} else {
+						if (index < this.log.seen) element.removeClass("--macro-ctp-t8n");
+						element.toggleClass("--macro-ctp-hidden", index > this.log.index || index < this.log.lastClear);
 					}
-				});
+				}
+			});
 			this.stack[index].element = element;
 			return element;
 		}
@@ -98,7 +86,7 @@
 				this.log.index++;
 				const firstTime = this.log.index > this.log.seen;
 				this.log.seen = Math.max(this.log.seen, this.log.index);
-				this.log.lastClear = this.clears.slice().reverse().find(el => el <= this.log.index) ?? -1;
+				this.log.lastClear = this.clears.slice().reverse().find((el) => el <= this.log.index) ?? -1;
 				$(document).trigger("update.macro-ctp", ["advance", this.id, this.log.index]);
 				this.stack.forEach(({ element }) => element.trigger("update-internal.macro-ctp", [firstTime, "advance", this.id, this.log.index]));
 			}
@@ -108,13 +96,14 @@
 		back() {
 			if (this.log.index > 0) {
 				this.log.index--;
-				this.log.lastClear = this.clears.slice().reverse().find(el => el <= this.log.index) ?? -1;
+				this.log.lastClear = this.clears.slice().reverse().find((el) => el <= this.log.index) ?? -1;
 				$(document).trigger("update.macro-ctp", ["back", this.id, this.log.index]);
 				this.stack.forEach(({ element }) => element.trigger("update-internal.macro-ctp", [false, "back", this.id, this.log.index]));
 			}
 			return this;
 		}
-	}
+	};
+	window.CTP = CTP;
 
 	Macro.add("ctp", {
 		tags: ["ctpNext"],
@@ -127,20 +116,19 @@
 				const options = {};
 				if (args.includes("clear")) options.clear = true;
 				if (args.includesAny("t8n", "transition")) options.transition = true;
-				const elementArg = (args.find((el) => el.startsWith("element:")) ?? "");
+				const elementArg = args.find((el) => el.startsWith("element:")) ?? "";
 				if (elementArg) options.element = elementArg.replace("element:", "");
 				if (name === "ctp") ctp.options = { ...options };
 				ctp.add(contents, options);
 			});
 			$(this.output).append(ctp.output());
-			$(document).one(":passagedisplay", () => {
-				if (_passage === passage()) {
-					const i = Math.max(ctp.log.index, 0);
-					ctp.log.index = -1;
-					ctp.log.seen = -1;
-					while (ctp.log.index < i) ctp.advance();
-				}
-			});
+			
+			if (_passage === passage()) {
+				const i = Math.max(ctp.log.index, 0);
+				ctp.log.index = -1;
+				ctp.log.seen = -1;
+				while (ctp.log.index < i) ctp.advance();
+			}
 		}
 	});
 
