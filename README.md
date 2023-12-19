@@ -27,11 +27,6 @@ Besides that, there's a `cycy.twee-config.yaml` in the root of the repo, and tha
     - Make the *display* of an expression 'live' and 'update' every such display to see the changes instantly.  
     - Under the hood, it works similarly to how the `<<replace>>` and other DOM macros do, but on the surface, it's *wayyy* simpler to use.
 
-4. [DRAFT] [Narrative Tree (NTree)](./narrative-tree)
-	> ***NOTE:*** This is not the most straightforward library to use. Basic JavaScript knowledge is required. There are illustrative examples provided, but for advanced usage, experience with how data moves around in JavaScript is recommended.
-	- *"A turbocharged CTP, broken free from the chains of being locked to one passage..."*
-	- *Actually* made for VN like interfaces.
-
 ---
 
 ## JavaScript Libraries
