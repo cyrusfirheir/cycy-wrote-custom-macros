@@ -4,6 +4,9 @@
 
 A set of two macros to make life easier when updating a variable and its displays.
 
+> [!NOTE]
+> As of SugarCube `v2.37.0` and higher, `<<do>>` and `<<redo>>` allow for the same functionality natively and it's recommended to use those instead.
+
 ---
 
 ## Installation
